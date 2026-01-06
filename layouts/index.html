@@ -1,0 +1,35 @@
+{{ define "main" }}
+<section class="section hero" id="top">
+    <div class="container hero-layout">
+        <div class="hero-copy">
+            <h1 data-appear data-appear-group="hero">
+                Build a personal home server that serves your needs, not the cloud's.
+            </h1>
+            <p class="lead" data-appear data-appear-group="hero">
+                Atlas walks you through hardware selection, OS installation/setup, and service playbooks so you
+                can stream media, and safeguard Immich under your own roof.
+            </p>
+            <div class="actions" data-appear data-appear-group="hero">
+                <a class="button button-large" href="{{" /blueprint/foundation" | relURL }}">Start the blueprint</a>
+            </div>
+        </div>
+        <div class="card hero-card" data-appear data-appear-group="hero" data-appear-delay="120">
+            <header class="card-header">
+                <h2>Homelab launch checklist</h2>
+                <p>
+                    Ship critical services on day one while keeping security, storage, and observability in
+                    check.
+                </p>
+            </header>
+            <div class="card-content">
+                <ul class="checklist">
+                    <li>Designate SSD for app data and HDD/ZFS pool for media payloads.</li>
+                    <li>Provision reverse proxy (Caddy/Traefik) with wildcard certificates.</li>
+                    <li>Centralize credentials via Authentik and passkeys.</li>
+                    <li>Enable off-site backups with restic + Backblaze or Hetzner.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}

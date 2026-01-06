@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Debian - Atlas</title>
+    <meta name="description"
+        content="Your resource for building a home server that serves your needs, not the cloud&#39;s." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('has-js');
+    </script>
+    
+    <link rel="stylesheet" href="http://localhost:1313/styles.css" />
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">Atlas</a>
+            <nav class="primary-nav" aria-label="Main navigation">
+                <a href="/">Home</a>
+                <a href="/blueprint/foundation">Blueprint</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+<section class="section blueprint-page" id="blueprint-top">
+    <div class="container blueprint-layout">
+        <aside class="blueprint-sidebar" aria-label="Blueprint outline" data-appear data-appear-group="blueprint">
+            <h2>Blueprint</h2>
+            <nav class="blueprint-nav" aria-label="Section navigation">
+                <ol>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blueprint/00-foundation/" >Foundation</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/slskd-lidarr/" >Music Acquisition: slskd &#43; Lidarr</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/01-hardware/" >Hardware</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/02-proxmox/" >Proxmox</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/03-truenas/" >TrueNAS</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/04-haos/" >HAOS</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/05-debian/"  aria-current="page" >Debian</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/06-nas-access/" >NAS Access</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/07-tailscale/" >Tailscale</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/08-docker/" >Docker</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/09-filebrowser/" >File Management: FileBrowser</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/10-crafty/" >Minecraft Server: Crafty</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/11-nginx/" >Web Server: NGINX</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/12-torrents/" >Torrents: qBittorrent &#43; VueTorrent &#43; Gluetun</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/13-movies-tv/" >Movies/TV Libraries</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/14-jellyfin/" >Jellyfin</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/16-navidrome/" >Music Streaming: Navidrome &#43; Mobile Clients</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/17-immich/" >Photos: Immich &#43; Mobile Backup over Tailscale</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/18-n8n/" >Workflow Automation: n8n</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/19-llms/" >Local LLMs: Ollama &#43; OpenWebUI</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/20-paperless-ngx/" >Document Management: Paperless-ngx</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/21-watchtower/" >Watchtower</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/22-domain/" >Domain &#43; Cloudflare &#43; Caddy Reverse Proxy</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/23-backup/" >Backup NAS &#43; ZFS Replication</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/24-extras/" >Extras: Monitoring, Backups, UPS, Hygiene</a>
+                    </li>
+                    
+                </ol>
+            </nav>
+        </aside>
+
+        <div class="blueprint-content">
+            <section class="blueprint-section" data-appear data-appear-group="blueprint">
+                <header>
+                    
+                    <p class="step-meta">Phase 5</p>
+                    
+                    <h2>Debian</h2>
+                </header>
+                
+                <div class="step-list">
+                    <p>This Debian VM is your “app host” for Docker.</p>
+<h2 id="1-create-the-debian-vm">1) Create the Debian VM</h2>
+<p>Suggested starting resources:</p>
+<ul>
+<li>vCPU: 4–12</li>
+<li>RAM: 16–32 GB (more if LLMs)</li>
+<li>Disk: 100–300 GB on fast storage</li>
+</ul>
+<p>Proxmox settings (recommended):</p>
+<ul>
+<li>Machine: <code>q35</code></li>
+<li>BIOS: OVMF (UEFI)</li>
+<li>CPU type: host</li>
+<li>Disk: VirtIO SCSI</li>
+<li>Network: VirtIO</li>
+</ul>
+<p>Install Debian from ISO normally.</p>
+<h2 id="2-ssh-crash-course">2) SSH crash course</h2>
+<h3 id="install-ssh-server">Install SSH server</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt install -y openssh-server
+</span></span><span style="display:flex;"><span>sudo systemctl <span style="color:#7fbaf5">enable</span> --now ssh
+</span></span></code></pre></div><h3 id="find-the-vm-ip">Find the VM IP</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ip a
+</span></span></code></pre></div><h3 id="connect-from-your-computer">Connect from your computer</h3>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh youruser@&lt;debian-ip&gt;
+</span></span></code></pre></div><h3 id="use-ssh-keys-recommended">Use SSH keys (recommended)</h3>
+<p>On your computer:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>ssh-keygen -t ed25519
+</span></span><span style="display:flex;"><span>ssh-copy-id youruser@&lt;debian-ip&gt;
+</span></span></code></pre></div><h2 id="3-gpuigpu-passthrough-overview">3) GPU/iGPU passthrough overview</h2>
+<p>Two common goals:</p>
+<ul>
+<li><strong>Jellyfin hardware transcoding</strong> (Intel Quick Sync or NVIDIA NVENC)</li>
+<li><strong>Ollama acceleration</strong> (typically NVIDIA)</li>
+</ul>
+<p>If you get stuck with iGPU passthrough, consider:</p>
+<ul>
+<li>using an NVIDIA GPU passthrough, or</li>
+<li>running Jellyfin in an LXC with <code>/dev/dri</code> (outside the scope of this VM-only guide)</li>
+</ul>
+<h2 id="4-enable-iommu-on-proxmox-required">4) Enable IOMMU on Proxmox (required)</h2>
+<h3 id="bios-settings">BIOS settings</h3>
+<p>Enable:</p>
+<ul>
+<li>Intel VT-d / AMD-Vi (IOMMU)</li>
+<li>Above 4G decoding (often required for GPUs)</li>
+</ul>
+<h3 id="proxmox-grub-settings">Proxmox GRUB settings</h3>
+<p>Edit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano /etc/default/grub
+</span></span></code></pre></div><p>Intel:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>GRUB_CMDLINE_LINUX_DEFAULT=&#34;quiet intel_iommu=on iommu=pt&#34;
+</span></span></code></pre></div><p>AMD:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>GRUB_CMDLINE_LINUX_DEFAULT=&#34;quiet amd_iommu=on iommu=pt&#34;
+</span></span></code></pre></div><p>Apply + reboot:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>update-grub
+</span></span><span style="display:flex;"><span>reboot
+</span></span></code></pre></div><h3 id="load-vfio-modules">Load VFIO modules</h3>
+<p>Create:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano /etc/modules-load.d/vfio.conf
+</span></span></code></pre></div><p>Add:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>vfio
+</span></span><span style="display:flex;"><span>vfio_iommu_type1
+</span></span><span style="display:flex;"><span>vfio_pci
+</span></span><span style="display:flex;"><span>vfio_virqfd
+</span></span></code></pre></div><p>Reboot and confirm:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>dmesg <span style="color:#56b6c2">|</span> grep -e IOMMU -e DMAR
+</span></span></code></pre></div><h2 id="5-nvidia-gpu-passthrough-most-common">5) NVIDIA GPU passthrough (most common)</h2>
+<h3 id="identify-gpu-pci-devices">Identify GPU PCI devices</h3>
+<p>On Proxmox:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>lspci -nn <span style="color:#56b6c2">|</span> grep -i nvidia
+</span></span></code></pre></div><p>You’ll typically see:</p>
+<ul>
+<li>GPU function (e.g., <code>01:00.0</code>)</li>
+<li>Audio function (e.g., <code>01:00.1</code>)</li>
+</ul>
+<h3 id="add-gpu-to-the-debian-vm">Add GPU to the Debian VM</h3>
+<p>Proxmox UI:</p>
+<ul>
+<li>Debian VM → Hardware → Add → PCI Device</li>
+<li>Add the GPU and its audio function</li>
+<li>Check “PCI-Express” and “All Functions” when appropriate</li>
+</ul>
+<h3 id="install-nvidia-drivers-in-debian">Install NVIDIA drivers in Debian</h3>
+<p>Inside Debian:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt update
+</span></span><span style="display:flex;"><span>sudo apt install -y nvidia-driver
+</span></span><span style="display:flex;"><span>sudo reboot
+</span></span></code></pre></div><p>Verify:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nvidia-smi
+</span></span></code></pre></div><h2 id="6-intel-quick-sync-vaapi-notes">6) Intel Quick Sync (VAAPI) notes</h2>
+<p>If Debian has access to <code>/dev/dri</code>, install:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo apt install -y vainfo intel-media-va-driver
+</span></span><span style="display:flex;"><span>vainfo
+</span></span></code></pre></div><h2 id="next">Next</h2>
+<p>Proceed to: <strong><a href="06-nas-mounts.md">NAS Access from Debian</a></strong></p>
+<hr>
+<p><strong>Navigation:</strong> ← <a href="04-haos-vm.md">Home Assistant OS VM on Proxmox (Backups to NAS)</a> | <a href="06-nas-mounts.md">NAS Access from Debian (SMB/NFS Mounts)</a> →</p>
+
+                </div>
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+                <div class="blueprint-pagination">
+                    
+                    
+                    
+                    
+                    <a href="/blueprint/04-haos/" rel="prev" class="button button-outline">← HAOS</a>
+                    
+
+                    
+                    
+                    <a href="/blueprint/06-nas-access/" rel="next" class="button">NAS Access →</a>
+                    
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('pre').forEach(function (pre) {
+                const button = document.createElement('button');
+                button.className = 'copy-button';
+                button.textContent = 'Copy';
+                button.setAttribute('aria-label', 'Copy code to clipboard');
+
+                button.addEventListener('click', async function () {
+                    const code = pre.querySelector('code');
+                    const text = code ? code.textContent : pre.textContent;
+
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        button.textContent = 'Copied!';
+                        button.classList.add('copied');
+
+                        setTimeout(function () {
+                            button.textContent = 'Copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy:', err);
+                        button.textContent = 'Error';
+                    }
+                });
+
+                pre.appendChild(button);
+            });
+
+            
+            const appearElements = Array.from(document.querySelectorAll('[data-appear]'));
+            if (appearElements.length) {
+                document.body.classList.add('is-appear-ready');
+                const groups = new Map();
+
+                window.requestAnimationFrame(function () {
+                    appearElements.forEach(function (element) {
+                        const group = element.getAttribute('data-appear-group') || 'default';
+                        const index = groups.get(group) || 0;
+                        element.style.setProperty('--stagger-index', String(index));
+
+                        const delayAttr = element.getAttribute('data-appear-delay');
+                        if (delayAttr !== null) {
+                            const delayValue = Number(delayAttr);
+                            if (!Number.isNaN(delayValue)) {
+                                element.style.setProperty('--appear-delay', delayValue + 'ms');
+                            }
+                        }
+
+                        groups.set(group, index + 1);
+                        element.classList.add('is-visible');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

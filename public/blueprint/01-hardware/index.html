@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hardware - Atlas</title>
+    <meta name="description"
+        content="Your resource for building a home server that serves your needs, not the cloud&#39;s." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('has-js');
+    </script>
+    
+    <link rel="stylesheet" href="http://localhost:1313/styles.css" />
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">Atlas</a>
+            <nav class="primary-nav" aria-label="Main navigation">
+                <a href="/">Home</a>
+                <a href="/blueprint/foundation">Blueprint</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+<section class="section blueprint-page" id="blueprint-top">
+    <div class="container blueprint-layout">
+        <aside class="blueprint-sidebar" aria-label="Blueprint outline" data-appear data-appear-group="blueprint">
+            <h2>Blueprint</h2>
+            <nav class="blueprint-nav" aria-label="Section navigation">
+                <ol>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blueprint/00-foundation/" >Foundation</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/slskd-lidarr/" >Music Acquisition: slskd &#43; Lidarr</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/01-hardware/"  aria-current="page" >Hardware</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/02-proxmox/" >Proxmox</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/03-truenas/" >TrueNAS</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/04-haos/" >HAOS</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/05-debian/" >Debian</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/06-nas-access/" >NAS Access</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/07-tailscale/" >Tailscale</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/08-docker/" >Docker</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/09-filebrowser/" >File Management: FileBrowser</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/10-crafty/" >Minecraft Server: Crafty</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/11-nginx/" >Web Server: NGINX</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/12-torrents/" >Torrents: qBittorrent &#43; VueTorrent &#43; Gluetun</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/13-movies-tv/" >Movies/TV Libraries</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/14-jellyfin/" >Jellyfin</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/16-navidrome/" >Music Streaming: Navidrome &#43; Mobile Clients</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/17-immich/" >Photos: Immich &#43; Mobile Backup over Tailscale</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/18-n8n/" >Workflow Automation: n8n</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/19-llms/" >Local LLMs: Ollama &#43; OpenWebUI</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/20-paperless-ngx/" >Document Management: Paperless-ngx</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/21-watchtower/" >Watchtower</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/22-domain/" >Domain &#43; Cloudflare &#43; Caddy Reverse Proxy</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/23-backup/" >Backup NAS &#43; ZFS Replication</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/24-extras/" >Extras: Monitoring, Backups, UPS, Hygiene</a>
+                    </li>
+                    
+                </ol>
+            </nav>
+        </aside>
+
+        <div class="blueprint-content">
+            <section class="blueprint-section" data-appear data-appear-group="blueprint">
+                <header>
+                    
+                    <p class="step-meta">Phase 1</p>
+                    
+                    <h2>Hardware</h2>
+                </header>
+                
+                <div class="step-list">
+                    <p>This page helps you choose hardware based on what you plan to self-host.</p>
+<h2 id="1-start-by-listing-your-services">1) Start by listing your services</h2>
+<p>Different services stress different resources:</p>
+<h3 id="light-services-low-cpuram">Light services (low CPU/RAM)</h3>
+<ul>
+<li>NGINX, FileBrowser, small n8n workflows, basic Paperless usage</li>
+</ul>
+<h3 id="media-services-cpu--storage-gpuigpu-helps">Media services (CPU + storage; GPU/iGPU helps)</h3>
+<ul>
+<li>Jellyfin (especially transcoding)</li>
+<li>*arr stack (Sonarr/Radarr/Lidarr)</li>
+<li>Immich (photo processing)</li>
+</ul>
+<h3 id="game-servers-cpu--ram">Game servers (CPU + RAM)</h3>
+<ul>
+<li>Minecraft servers (Crafty)</li>
+</ul>
+<h3 id="local-llms-gpu--vram--fast-disk">Local LLMs (GPU + VRAM + fast disk)</h3>
+<ul>
+<li>Ollama + OpenWebUI</li>
+</ul>
+<h2 id="2-recommended-baseline-builds">2) Recommended baseline builds</h2>
+<p>Choose the closest match to your goals.</p>
+<h3 id="a-starter-build-learning--a-few-services">A) Starter build (learning + a few services)</h3>
+<ul>
+<li>CPU: 4–6 cores</li>
+<li>RAM: 16 GB</li>
+<li>Storage: 500 GB–1 TB SSD</li>
+</ul>
+<h3 id="b-media--automation-build-most-popular">B) Media + automation build (most popular)</h3>
+<ul>
+<li>CPU: 6–12 cores</li>
+<li>RAM: 32 GB (64 GB if you can)</li>
+<li>GPU: Intel iGPU (Quick Sync) <strong>or</strong> NVIDIA GPU for NVENC</li>
+<li>Storage: 1–2 TB NVMe + HDDs for media</li>
+</ul>
+<h3 id="c-all-in-one-build-this-guides-target">C) “All-in-one” build (this guide’s target)</h3>
+<p>You requested NAS + HA + Docker apps + media + LLMs + Minecraft on one machine.</p>
+<p><strong>Recommended:</strong></p>
+<ul>
+<li>CPU: Intel 8th gen+ with iGPU (Quick Sync) <em>or</em> Ryzen + NVIDIA GPU</li>
+<li>RAM: <strong>64 GB</strong> (32 GB minimum if careful)</li>
+<li>NVMe: 1–2 TB (VMs + containers + databases)</li>
+<li>HDDs: 2–8 drives for ZFS pool</li>
+<li>Network: 1 GbE minimum; 2.5 GbE nice-to-have</li>
+<li>UPS: strongly recommended</li>
+</ul>
+<h2 id="3-storage-strategy-zfs-friendly">3) Storage strategy (ZFS-friendly)</h2>
+<p>Plan storage with redundancy:</p>
+<ul>
+<li>2 drives → mirror</li>
+<li>3–5 drives → RAIDZ1</li>
+<li>6+ drives → RAIDZ2</li>
+</ul>
+<p>Avoid SMR drives for RAID/ZFS workloads when possible.</p>
+<h2 id="4-single-machine-vs-split-storagecompute">4) Single machine vs split storage/compute</h2>
+<h3 id="for-this-guide-single-machine">For this guide: single machine</h3>
+<p>We assume a desktop or old gaming PC so you can use:</p>
+<ul>
+<li>multiple internal drives</li>
+<li>an NVMe SSD</li>
+<li>optionally a GPU</li>
+</ul>
+<h3 id="optional-split-storage--compute">Optional: split storage + compute</h3>
+<ul>
+<li>Machine A: TrueNAS SCALE with many HDDs</li>
+<li>Machine B: mini PC running Proxmox + Debian for compute</li>
+</ul>
+<p>Pros: easier upgrades, clearer separation.
+Cons: more hardware and power.</p>
+<h3 id="optional-rackmount">Optional: rackmount</h3>
+<p>If you want hot-swap bays and server parts, a used rackmount build can be fun—just expect more noise and power draw.</p>
+<h2 id="5-shopping-list-practical">5) Shopping list (practical)</h2>
+<ul>
+<li>Desktop/old gaming PC</li>
+<li>1–2 TB NVMe (Proxmox + VM disks + appdata)</li>
+<li>2–6 HDDs (NAS pool)</li>
+<li>Optional NVIDIA GPU (LLMs / heavy transcoding)</li>
+<li>UPS</li>
+</ul>
+<h2 id="next">Next</h2>
+<p>Proceed to: <strong><a href="02-proxmox-install.md">Installing Proxmox VE</a></strong></p>
+<hr>
+<p><strong>Navigation:</strong>   <a href="02-proxmox-install.md">Installing Proxmox VE (Bare Metal)</a> →</p>
+
+                </div>
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+                <div class="blueprint-pagination">
+                    
+                    
+                    
+                    
+                    <a href="/blueprint/slskd-lidarr/" rel="prev" class="button button-outline">← Music Acquisition: slskd &#43; Lidarr</a>
+                    
+
+                    
+                    
+                    <a href="/blueprint/02-proxmox/" rel="next" class="button">Proxmox →</a>
+                    
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('pre').forEach(function (pre) {
+                const button = document.createElement('button');
+                button.className = 'copy-button';
+                button.textContent = 'Copy';
+                button.setAttribute('aria-label', 'Copy code to clipboard');
+
+                button.addEventListener('click', async function () {
+                    const code = pre.querySelector('code');
+                    const text = code ? code.textContent : pre.textContent;
+
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        button.textContent = 'Copied!';
+                        button.classList.add('copied');
+
+                        setTimeout(function () {
+                            button.textContent = 'Copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy:', err);
+                        button.textContent = 'Error';
+                    }
+                });
+
+                pre.appendChild(button);
+            });
+
+            
+            const appearElements = Array.from(document.querySelectorAll('[data-appear]'));
+            if (appearElements.length) {
+                document.body.classList.add('is-appear-ready');
+                const groups = new Map();
+
+                window.requestAnimationFrame(function () {
+                    appearElements.forEach(function (element) {
+                        const group = element.getAttribute('data-appear-group') || 'default';
+                        const index = groups.get(group) || 0;
+                        element.style.setProperty('--stagger-index', String(index));
+
+                        const delayAttr = element.getAttribute('data-appear-delay');
+                        if (delayAttr !== null) {
+                            const delayValue = Number(delayAttr);
+                            if (!Number.isNaN(delayValue)) {
+                                element.style.setProperty('--appear-delay', delayValue + 'ms');
+                            }
+                        }
+
+                        groups.set(group, index + 1);
+                        element.classList.add('is-visible');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

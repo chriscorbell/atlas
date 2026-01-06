@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Installing Proxmox VE (Bare Metal) - Atlas</title>
+    <meta name="description"
+        content="Your resource for building a home server that serves your needs, not the cloud&#39;s." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('has-js');
+    </script>
+    
+    <link rel="stylesheet" href="http://localhost:1313/styles.css" />
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="/" class="logo">Atlas</a>
+            <nav class="primary-nav" aria-label="Main navigation">
+                <a href="/">Home</a>
+                <a href="/blueprint/foundation">Blueprint</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        
+<section class="section blueprint-page" id="blueprint-top">
+    <div class="container blueprint-layout">
+        <aside class="blueprint-sidebar" aria-label="Blueprint outline" data-appear data-appear-group="blueprint">
+            <h2>Blueprint</h2>
+            <nav class="blueprint-nav" aria-label="Section navigation">
+                <ol>
+                    
+                    
+                    
+                    <li>
+                        <a href="/blueprint/00-test/" >Atlas: The Home Server Blueprint</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/watchtower/" >Auto Updates: Watchtower</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/backup-nas/" >Backup NAS &#43; ZFS Replication</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/debian-vm-gpu-ssh/" >Debian VM on Proxmox (GPU/iGPU Passthrough &#43; SSH)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/docker-basics/" >Docker Engine &#43; Compose &#43; Utilities</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/paperless/" >Document Management: Paperless-ngx</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/domain-cloudflare-caddy/" >Domain &#43; Cloudflare &#43; Caddy Reverse Proxy</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/extras/" >Extras: Monitoring, Backups, UPS, Hygiene</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/filebrowser/" >File Management: FileBrowser</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/hardware/" >Hardware Selection &amp; Recommendations</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/haos-vm/" >Home Assistant OS VM on Proxmox (Backups to NAS)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/proxmox-install/"  aria-current="page" >Installing Proxmox VE (Bare Metal)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/jellyfin/" >Jellyfin (Media Streaming &#43; Hardware Acceleration)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/ollama/" >Local LLMs: Ollama &#43; OpenWebUI</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/crafty/" >Minecraft Server: Crafty (&#43; Port Forwarding)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/slskd-lidarr/" >Music Acquisition: slskd &#43; Lidarr</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/navidrome/" >Music Server: Navidrome (&#43; Mobile Clients)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/nas-mounts/" >NAS Access from Debian (SMB/NFS Mounts)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/immich/" >Photos: Immich (&#43; Mobile Backup over Tailscale)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/tailscale/" >Tailscale Remote Access</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/arr-stack/" >The *arr Stack: Sonarr &#43; Radarr (&#43; Jellyseerr)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/torrents/" >Torrents: qBittorrent &#43; VueTorrent &#43; Gluetun</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/truenas-vm/" >TrueNAS SCALE VM on Proxmox (ZFS &#43; SMB)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/nginx/" >Web Server: NGINX (Static Sites)</a>
+                    </li>
+                    
+                    <li>
+                        <a href="/blueprint/n8n/" >Workflow Automation: n8n</a>
+                    </li>
+                    
+                </ol>
+            </nav>
+        </aside>
+
+        <div class="blueprint-content">
+            <section class="blueprint-section" data-appear data-appear-group="blueprint">
+                <header>
+                    
+                    <h2>Installing Proxmox VE (Bare Metal)</h2>
+                </header>
+                
+                <div class="step-list">
+                    <h1 id="installing-proxmox-ve-bare-metal">Installing Proxmox VE (Bare Metal)</h1>
+<p>Proxmox VE will be your bare-metal hypervisor. You’ll manage VMs (TrueNAS, Home Assistant, Debian) from its web UI.</p>
+<h2 id="1-prepare-install-media">1) Prepare install media</h2>
+<ol>
+<li>Download the latest Proxmox VE ISO</li>
+<li>Write the ISO to a USB drive (Rufus/Balena Etcher)</li>
+<li>Boot your server from the USB drive</li>
+</ol>
+<h2 id="2-install-proxmox">2) Install Proxmox</h2>
+<ol>
+<li>Choose <strong>Install Proxmox VE</strong></li>
+<li>Select the target disk (SSD/NVMe recommended)</li>
+<li>Set timezone/keyboard</li>
+<li>Set a strong root password + email</li>
+<li>Network:
+<ul>
+<li>Prefer a static IP or DHCP reservation</li>
+<li>Set a hostname like <code>pve</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="3-first-login">3) First login</h2>
+<p>From another computer on your LAN:</p>
+<ul>
+<li>Open: <code>https://&lt;proxmox-ip&gt;:8006</code></li>
+<li>Login as <code>root</code></li>
+</ul>
+<h2 id="4-post-install-basics">4) Post-install basics</h2>
+<h3 id="update-packages">Update packages</h3>
+<p>In UI: <strong>Node → Updates → Refresh → Upgrade</strong></p>
+<p>Or in shell:</p>
+<div class="highlight"><pre tabindex="0" style="color:#c9c9c9;background-color:#282c34;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>apt update <span style="color:#bc74c4">&amp;&amp;</span> apt -y full-upgrade
+</span></span></code></pre></div><h3 id="create-a-non-root-admin-user-recommended">Create a non-root admin user (recommended)</h3>
+<ul>
+<li>Datacenter → Permissions → Users → Add</li>
+<li>Assign an Administrator role</li>
+</ul>
+<h3 id="upload-isos">Upload ISOs</h3>
+<ul>
+<li><code>local</code> → ISO Images → Upload</li>
+</ul>
+<h2 id="next">Next</h2>
+<p>Proceed to: <strong><a href="03-truenas-vm.md">TrueNAS SCALE VM</a></strong></p>
+<hr>
+<p><strong>Navigation:</strong> ← <a href="01-hardware.md">Hardware Selection &amp; Recommendations</a> | <a href="03-truenas-vm.md">TrueNAS SCALE VM on Proxmox (ZFS + SMB)</a> →</p>
+
+                </div>
+
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+
+                <div class="blueprint-pagination">
+                    
+                    
+                    
+                    
+                    <a href="/blueprint/haos-vm/" rel="prev" class="button button-outline">← Home Assistant OS VM on Proxmox (Backups to NAS)</a>
+                    
+
+                    
+                    
+                    <a href="/blueprint/jellyfin/" rel="next" class="button">Jellyfin (Media Streaming &#43; Hardware Acceleration) →</a>
+                    
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('pre').forEach(function (pre) {
+                const button = document.createElement('button');
+                button.className = 'copy-button';
+                button.textContent = 'Copy';
+                button.setAttribute('aria-label', 'Copy code to clipboard');
+
+                button.addEventListener('click', async function () {
+                    const code = pre.querySelector('code');
+                    const text = code ? code.textContent : pre.textContent;
+
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        button.textContent = 'Copied!';
+                        button.classList.add('copied');
+
+                        setTimeout(function () {
+                            button.textContent = 'Copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy:', err);
+                        button.textContent = 'Error';
+                    }
+                });
+
+                pre.appendChild(button);
+            });
+
+            
+            const appearElements = Array.from(document.querySelectorAll('[data-appear]'));
+            if (appearElements.length) {
+                document.body.classList.add('is-appear-ready');
+                const groups = new Map();
+
+                window.requestAnimationFrame(function () {
+                    appearElements.forEach(function (element) {
+                        const group = element.getAttribute('data-appear-group') || 'default';
+                        const index = groups.get(group) || 0;
+                        element.style.setProperty('--stagger-index', String(index));
+
+                        const delayAttr = element.getAttribute('data-appear-delay');
+                        if (delayAttr !== null) {
+                            const delayValue = Number(delayAttr);
+                            if (!Number.isNaN(delayValue)) {
+                                element.style.setProperty('--appear-delay', delayValue + 'ms');
+                            }
+                        }
+
+                        groups.set(group, index + 1);
+                        element.classList.add('is-visible');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+{{ define "main" }}
+<section class="section blueprint-page" id="blueprint-top">
+    <div class="container blueprint-layout">
+        <aside class="blueprint-sidebar" aria-label="Blueprint outline" data-appear data-appear-group="blueprint">
+            <h2>Blueprint</h2>
+            <nav class="blueprint-nav" aria-label="Section navigation">
+                <ol>
+                    {{ $sections := where .Site.RegularPages "Section" "blueprint" }}
+                    {{ $sections := sort $sections ".Params.weight" }}
+                    {{ range $sections }}
+                    <li>
+                        <a href="{{ .RelPermalink }}" {{ if eq $.RelPermalink .RelPermalink }} aria-current="page" {{
+                            end }}>{{ .Title }}</a>
+                    </li>
+                    {{ end }}
+                </ol>
+            </nav>
+        </aside>
+
+        <div class="blueprint-content">
+            <section class="blueprint-section" data-appear data-appear-group="blueprint">
+                <header>
+                    {{ if .Params.phase }}
+                    <p class="step-meta">{{ .Params.phase }}</p>
+                    {{ end }}
+                    <h2>{{ .Title }}</h2>
+                </header>
+                {{ if .Description }}
+                <p>{{ .Description }}</p>
+                {{ end }}
+                <div class="step-list">
+                    {{ .Content }}
+                </div>
+
+                {{ $sections := where .Site.RegularPages "Section" "blueprint" }}
+                {{ $sections := sort $sections ".Params.weight" }}
+                {{ $currentIndex := 0 }}
+                {{ range $index, $section := $sections }}
+                {{ if eq $.RelPermalink $section.RelPermalink }}
+                {{ $currentIndex = $index }}
+                {{ end }}
+                {{ end }}
+
+                <div class="blueprint-pagination">
+                    {{ $prevIndex := sub $currentIndex 1 }}
+                    {{ $nextIndex := add $currentIndex 1 }}
+                    {{ if ge $prevIndex 0 }}
+                    {{ $prevPage := index $sections $prevIndex }}
+                    <a href="{{ $prevPage.RelPermalink }}" rel="prev" class="button button-outline">← {{ $prevPage.Title
+                        }}</a>
+                    {{ else }}
+                    <span></span>
+                    {{ end }}
+
+                    {{ if lt $nextIndex (len $sections) }}
+                    {{ $nextPage := index $sections $nextIndex }}
+                    <a href="{{ $nextPage.RelPermalink }}" rel="next" class="button">{{ $nextPage.Title }} →</a>
+                    {{ else }}
+                    <a href="#blueprint-top" rel="start" class="button button-outline">Return to Top</a>
+                    {{ end }}
+                </div>
+            </section>
+        </div>
+    </div>
+</section>
+{{ end }}

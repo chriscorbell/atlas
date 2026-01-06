@@ -1,0 +1,16 @@
+baseURL = 'https://example.org/'
+languageCode = 'en-us'
+title = 'Atlas'
+
+[params]
+description = "Your resource for building a home server that serves your needs, not the cloud's."
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      typographer = true
+      linkify = true
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    style = "vulcan"

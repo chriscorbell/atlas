@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} - {{ .Site.Title }}{{ end }}</title>
+    <meta name="description"
+        content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.description }}{{ end }}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('has-js');
+    </script>
+    {{ $styles := resources.Get "styles.css" }}
+    <link rel="stylesheet" href="{{ $styles.Permalink }}" />
+</head>
+
+<body>
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="{{ "/" | relURL }}" class="logo">Atlas</a>
+            <nav class="primary-nav" aria-label="Main navigation">
+                <a href="{{ "/" | relURL }}">Home</a>
+                <a href="{{ "/blueprint/foundation" | relURL }}">Blueprint</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        {{ block "main" . }}{{ end }}
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('pre').forEach(function (pre) {
+                const button = document.createElement('button');
+                button.className = 'copy-button';
+                button.textContent = 'Copy';
+                button.setAttribute('aria-label', 'Copy code to clipboard');
+
+                button.addEventListener('click', async function () {
+                    const code = pre.querySelector('code');
+                    const text = code ? code.textContent : pre.textContent;
+
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        button.textContent = 'Copied!';
+                        button.classList.add('copied');
+
+                        setTimeout(function () {
+                            button.textContent = 'Copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    } catch (err) {
+                        console.error('Failed to copy:', err);
+                        button.textContent = 'Error';
+                    }
+                });
+
+                pre.appendChild(button);
+            });
+
+            // Trigger lightweight staggered appear animations once DOM is ready.
+            const appearElements = Array.from(document.querySelectorAll('[data-appear]'));
+            if (appearElements.length) {
+                document.body.classList.add('is-appear-ready');
+                const groups = new Map();
+
+                window.requestAnimationFrame(function () {
+                    appearElements.forEach(function (element) {
+                        const group = element.getAttribute('data-appear-group') || 'default';
+                        const index = groups.get(group) || 0;
+                        element.style.setProperty('--stagger-index', String(index));
+
+                        const delayAttr = element.getAttribute('data-appear-delay');
+                        if (delayAttr !== null) {
+                            const delayValue = Number(delayAttr);
+                            if (!Number.isNaN(delayValue)) {
+                                element.style.setProperty('--appear-delay', delayValue + 'ms');
+                            }
+                        }
+
+                        groups.set(group, index + 1);
+                        element.classList.add('is-visible');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
