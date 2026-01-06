@@ -2,62 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/01-hardware/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/00-test/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/02-proxmox/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/watchtower/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/03-truenas/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/backup-nas/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/04-haos/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/05-debian/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/06-nas-access/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/debian-vm-gpu-ssh/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/07-tailscale/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/docker-basics/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/08-docker/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/paperless/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/09-filebrowser/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/domain-cloudflare-caddy/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/10-crafty/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/extras/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/11-nginx/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/filebrowser/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/12-torrents/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/hardware/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/13-movies-tv/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/haos-vm/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/14-jellyfin/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/proxmox-install/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/16-navidrome/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/jellyfin/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/17-immich/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/ollama/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/18-n8n/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/crafty/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/19-llms/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/slskd-lidarr/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/20-paperless-ngx/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/navidrome/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/21-watchtower/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/nas-mounts/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/22-domain/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/immich/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/23-backup/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/24-extras/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/tailscale/</loc>
+    <loc>https://atlas.neovoid.cc/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/arr-stack/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/torrents/</loc>
+    <loc>https://atlas.neovoid.cc/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/truenas-vm/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/00-foundation/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/nginx/</loc>
+    <loc>https://atlas.neovoid.cc/blueprint/slskd-lidarr/</loc>
   </url><url>
-    <loc>http://localhost:1313/blueprint/n8n/</loc>
+    <loc>https://atlas.neovoid.cc/tags/</loc>
   </url>
 </urlset>
