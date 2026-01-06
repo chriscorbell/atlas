@@ -14,3 +14,7 @@ description = "Your resource for building a home server that serves your needs, 
       unsafe = true
   [markup.highlight]
     style = "vulcan"
+
+[caches]
+  [caches.images]
+    dir = ':cacheDir/images'
