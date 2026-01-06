@@ -1,11 +1,8 @@
 ---
-title: "Music Acquisition: slskd + Lidarr"
-slug: "slskd-lidarr"
-order: 15
-last_updated: "2026-01-06"
+title: "Music Library"
+phase: "Phase 15"
+weight: 15
 ---
-
-# Music Acquisition: slskd + Lidarr
 
 > Use acquisition tools legally and responsibly.
 
