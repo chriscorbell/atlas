@@ -6,6 +6,9 @@ weight: 1
 
 #### Why Build Your Own Personal Server?
 
+> **WARNING:** 
+> Philosophical waxing ahead.<br>
+
 Modern technology sacrifices ownership and agency for convenience.
 
 Big Tech continues to force users into closed ecosystems that prioritize profit and control over user autonomy.
@@ -38,67 +41,12 @@ These tools already exist, and many are excellent, but their adoption is limited
 
 Users are often forced into a false choice: **either become an IT system administrator, or accept data extraction in exchange for convenience.**
 
-**This guide exists to challenge that assumption.**
+This guide exists to challenge that.
 
-#### Why This Guide Starts with This Foundation
+#### The "Why" Before the "How"
 
-Building a personal server isn’t just about running one application. Once you control your own infrastructure, everything connects:
-
-- Secure remote access
-- Safe file transfers from your phone
-- Network privacy and ad blocking
-- Backups, updates, and resilience
-
-Each layer builds on the one before it. That’s why this guide starts at the beginning and explains the why, not just the how.
+Building a personal server isn’t just about running one app at home. Once you control your own infrastructure, everything connects - each layer builds on the one before it. That’s why this guide starts at the beginning and explains the why, not just the how.
 
 **The goal is not to turn you into an expert overnight, the goal is to show you the path so you can walk it at your own pace.**
 
-Self‑hosting can be a rabbit hole, but it’s one that leads toward ownership, resilience, and long‑term digital freedom. Once you understand the foundations, you can decide how far down that path you want to go.
-
-
-
-- **Proxmox VE** as the bare-metal hypervisor
-- **TrueNAS SCALE** VM as your NAS
-- **Home Assistant OS** VM for smart home
-- **Debian VM** as your Docker application host (Jellyfin, Immich, *arr stack, n8n, Ollama, etc.)
-
-> **Last updated:** January 06, 2026
-
-#### Who this is for
-- You want to self-host services at home.
-- You’re comfortable with basic PC building and following terminal commands.
-- You want a setup that can evolve: start small, then add GPU acceleration, reverse proxy, backups, and monitoring.
-
-#### What you’ll build
-1. Pick hardware that matches your services (**GPU, RAM, storage, networking**)
-2. Install Proxmox on bare metal
-3. Run TrueNAS SCALE in a VM for ZFS-backed storage + SMB
-4. Run Home Assistant OS in a VM with automated backups to NAS
-5. Run Debian in a VM as your Docker host (optional GPU/iGPU passthrough)
-6. Deploy Docker services (media, photos, automation, docs, web, etc.)
-7. Secure remote access with Tailscale
-8. Optional: domain + Cloudflare + Caddy reverse proxy
-9. Optional: backup NAS + ZFS replication
-
-#### Recommended reading order
-Start here:
-- [Hardware Selection & Recommendations](01-hardware.md)
-- [Installing Proxmox VE (Bare Metal)](02-proxmox-install.md)
-- [TrueNAS SCALE VM on Proxmox (ZFS + SMB)](03-truenas-vm.md)
-- [Home Assistant OS VM on Proxmox (Backups to NAS)](04-haos-vm.md)
-- [Debian VM on Proxmox (GPU/iGPU Passthrough + SSH)](05-debian-vm-gpu-ssh.md)
-
-Then continue through the Docker apps as you need them.
-
-#### Conventions used in examples
-- Proxmox host: `pve`
-- TrueNAS VM: `truenas`
-- Home Assistant VM: `homeassistant`
-- Debian VM: `debian-docker`
-- ZFS pool: `tank`
-- Mounts in Debian: `/mnt/nas/...`
-
-#### Safety + responsibility notes
-- Keep management UIs (Proxmox/TrueNAS) **off the public internet**.
-- Use strong passwords and 2FA.
-- Use torrents and file acquisition tools **legally and responsibly**.
+Self‑hosting can be a rabbit hole, but it’s one that leads toward ownership and freedom. Once you understand the foundations, you can decide how far down you want to go.
