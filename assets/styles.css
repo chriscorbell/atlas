@@ -851,6 +851,9 @@ body.is-appear-ready [data-appear].is-visible {
     .blueprint-sidebar {
         position: sticky;
         top: 6.5rem;
+        max-height: calc(100vh - 9rem);
+        overflow-y: auto;
+        overscroll-behavior: contain;
     }
 }
 
