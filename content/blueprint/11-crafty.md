@@ -1,7 +1,7 @@
 ---
-title: "Minecraft Server: Crafty"
-phase: "Phase 10"
-weight: 10
+title: "Crafty"
+phase: "Phase 11"
+weight: 11
 ---
 
 Crafty is a web UI for managing one or more Minecraft servers.

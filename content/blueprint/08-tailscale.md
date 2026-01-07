@@ -1,7 +1,7 @@
 ---
 title: "Tailscale"
-phase: "Phase 7"
-weight: 7
+phase: "Phase 8"
+weight: 8
 ---
 
 Tailscale gives you secure remote access without port forwarding.

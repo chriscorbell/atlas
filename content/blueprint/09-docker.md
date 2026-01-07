@@ -1,7 +1,7 @@
 ---
 title: "Docker"
-phase: "Phase 8"
-weight: 8
+phase: "Phase 9"
+weight: 9
 ---
 
 This page sets up Docker on your Debian VM and a clean folder layout for all your stacks.

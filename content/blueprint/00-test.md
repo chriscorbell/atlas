@@ -1,59 +1,9 @@
 ---
-title: "Foundation"
+title: "Test"
 phase: "Phase 0"
 weight: 0
+draft: true
 ---
-
-Beginner-friendly, step-by-step guide to building a single-machine home server using:
-
-- **Proxmox VE** as the bare-metal hypervisor
-- **TrueNAS SCALE** VM as your NAS (ZFS + SMB)
-- **Home Assistant OS** VM for smart home
-- **Debian VM** as your Docker application host (Jellyfin, Immich, *arr stack, n8n, Ollama, etc.)
-
-> **Last updated:** January 06, 2026
-
-## Who this is for
-- You want to self-host services at home.
-- You’re comfortable with basic PC building and following terminal commands.
-- You want a setup that can evolve: start small, then add GPU acceleration, reverse proxy, backups, and monitoring.
-
-## What you’ll build
-1. Pick hardware that matches your services (**GPU, RAM, storage, networking**)
-2. Install Proxmox on bare metal
-3. Run TrueNAS SCALE in a VM for ZFS-backed storage + SMB
-4. Run Home Assistant OS in a VM with automated backups to NAS
-5. Run Debian in a VM as your Docker host (optional GPU/iGPU passthrough)
-6. Deploy Docker services (media, photos, automation, docs, web, etc.)
-7. Secure remote access with Tailscale
-8. Optional: domain + Cloudflare + Caddy reverse proxy
-9. Optional: backup NAS + ZFS replication
-
-## Recommended reading order
-Start here:
-- [Hardware Selection & Recommendations](01-hardware.md)
-- [Installing Proxmox VE (Bare Metal)](02-proxmox-install.md)
-- [TrueNAS SCALE VM on Proxmox (ZFS + SMB)](03-truenas-vm.md)
-- [Home Assistant OS VM on Proxmox (Backups to NAS)](04-haos-vm.md)
-- [Debian VM on Proxmox (GPU/iGPU Passthrough + SSH)](05-debian-vm-gpu-ssh.md)
-
-Then continue through the Docker apps as you need them.
-
-## Conventions used in examples
-- Proxmox host: `pve`
-- TrueNAS VM: `truenas`
-- Home Assistant VM: `homeassistant`
-- Debian VM: `debian-docker`
-- ZFS pool: `tank`
-- Mounts in Debian: `/mnt/nas/...`
-
-## Safety + responsibility notes
-- Keep management UIs (Proxmox/TrueNAS) **off the public internet**.
-- Use strong passwords and 2FA.
-- Use torrents and file acquisition tools **legally and responsibly**.
-
-## Table of contents
-See: [SUMMARY](SUMMARY.md)
 
 ---
 

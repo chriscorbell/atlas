@@ -1,7 +1,7 @@
 ---
 title: "Debian"
-phase: "Phase 5"
-weight: 5
+phase: "Phase 6"
+weight: 6
 ---
 
 This Debian VM is your “app host” for Docker.

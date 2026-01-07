@@ -1,7 +1,7 @@
 ---
-title: "Domain + Cloudflare + Caddy Reverse Proxy"
-phase: "Phase 22"
-weight: 22
+title: "Domain"
+phase: "Phase 23"
+weight: 23
 ---
 
 This page covers using a domain + Cloudflare DNS and setting up **Caddy** as a reverse proxy.

@@ -1,7 +1,7 @@
 ---
 title: "Proxmox"
-phase: "Phase 2"
-weight: 2
+phase: "Phase 3"
+weight: 3
 ---
 
 Proxmox VE will be your bare-metal hypervisor. You’ll manage VMs (TrueNAS, Home Assistant, Debian) from its web UI.

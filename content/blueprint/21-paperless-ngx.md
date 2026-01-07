@@ -1,7 +1,7 @@
 ---
-title: "Document Management: Paperless-ngx"
-phase: "Phase 20"
-weight: 20
+title: "Paperless-ngx"
+phase: "Phase 21"
+weight: 21
 ---
 
 Paperless-ngx turns paper into searchable documents with OCR and tagging.

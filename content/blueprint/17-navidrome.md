@@ -1,7 +1,7 @@
 ---
-title: "Music Streaming: Navidrome + Mobile Clients"
-phase: "Phase 16"
-weight: 16
+title: "Navidrome"
+phase: "Phase 17"
+weight: 17
 ---
 
 Navidrome is a lightweight music server compatible with Subsonic clients.

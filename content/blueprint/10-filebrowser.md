@@ -1,7 +1,7 @@
 ---
-title: "File Management: FileBrowser"
-phase: "Phase 9"
-weight: 9
+title: "FileBrowser"
+phase: "Phase 10"
+weight: 10
 ---
 
 FileBrowser provides a simple web UI to manage files on your NAS mounts.

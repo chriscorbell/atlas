@@ -1,13 +1,28 @@
 ---
-title: "Torrents: qBittorrent + VueTorrent + Gluetun"
-phase: "Phase 12"
-weight: 12
+title: "BitTorrent"
+phase: "Phase 13"
+weight: 13
 ---
 
 > Use torrents legally and responsibly.
 
-## Why Gluetun?
+The BitTorrent protocol will be your primary method for acquiring media like movies and TV shows.
+
+To facilitate this, we will construct a stack of two containers to work together: qBittorrent and Gluetun.
+
+#### qBittorrent?
+It's a simple BitTorrent client that has all the functions you need. It's free, it has no ads, it's open source, and is actively maintained.
+
+And... we can make its interface *prettier* using VueTorrent.
+
+#### VueTorrent?
+[VueTorrent](https://github.com/VueTorrent/VueTorrent) is a third-party WebUI (think "skin") for qBittorrent made by Rémi Marseault using Vue.js - it just looks and feels much more modern and usable than qBitTorrent's native WebUI, with a fully responsive design on both desktop and mobile.
+
+#### Gluetun?
 Gluetun routes traffic through your VPN provider and can prevent qBittorrent from leaking traffic outside the VPN.
+
+#### VPN?
+Yes, ideally you route ALL BitTorrent traffic through a third-party VPN. 
 
 ## 1) Create download directories on NAS
 Suggested:

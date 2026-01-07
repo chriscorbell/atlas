@@ -1,7 +1,7 @@
 ---
-title: "Photos: Immich + Mobile Backup over Tailscale"
-phase: "Phase 17"
-weight: 17
+title: "Immich"
+phase: "Phase 18"
+weight: 18
 ---
 
 Immich provides Google Photos-like features: backups, albums, ML tagging, and a great mobile app.

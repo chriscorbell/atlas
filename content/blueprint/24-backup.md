@@ -1,10 +1,10 @@
 ---
-title: "Backup NAS + ZFS Replication"
-phase: "Phase 23"
-weight: 23
+title: "Backups"
+phase: "Phase 24"
+weight: 24
 ---
 
-If losing your NAS data would be a big deal (photos/docs), build a backup NAS and replicate.
+If losing your NAS data would be a catastrophic event (photos/docs), you should build a backup NAS and replicate your main NAS's snapshots to it automatically on a recurring schedule.
 
 ## 1) Build a backup NAS
 - Old PC + drives

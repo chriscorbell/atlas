@@ -1,7 +1,7 @@
 ---
 title: "Jellyfin"
-phase: "Phase 14"
-weight: 14
+phase: "Phase 15"
+weight: 15
 ---
 
 Jellyfin streams your media library and can transcode using GPU/iGPU acceleration.

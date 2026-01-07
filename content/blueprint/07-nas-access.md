@@ -1,7 +1,7 @@
 ---
 title: "NAS Access"
-phase: "Phase 6"
-weight: 6
+phase: "Phase 7"
+weight: 7
 ---
 
 Your Debian Docker host should read/write storage on TrueNAS.

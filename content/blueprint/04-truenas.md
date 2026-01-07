@@ -1,7 +1,7 @@
 ---
 title: "TrueNAS"
-phase: "Phase 3"
-weight: 3
+phase: "Phase 4"
+weight: 4
 ---
 
 > **Important:** Virtualizing a NAS is totally doable, but do it correctly.

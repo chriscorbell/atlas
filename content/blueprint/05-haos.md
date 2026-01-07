@@ -1,7 +1,7 @@
 ---
 title: "HAOS"
-phase: "Phase 4"
-weight: 4
+phase: "Phase 5"
+weight: 5
 ---
 
 Home Assistant OS (HAOS) runs well in a Proxmox VM and keeps your smart home isolated from your Docker host.

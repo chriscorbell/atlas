@@ -1,7 +1,7 @@
 ---
 title: "Watchtower"
-phase: "Phase 21"
-weight: 21
+phase: "Phase 22"
+weight: 22
 ---
 
 Watchtower can automatically update your Docker containers.

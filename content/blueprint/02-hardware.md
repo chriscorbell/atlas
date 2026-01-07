@@ -1,7 +1,7 @@
 ---
 title: "Hardware"
-phase: "Phase 1"
-weight: 1
+phase: "Phase 2"
+weight: 2
 ---
 
 This page helps you choose hardware based on what you plan to self-host.

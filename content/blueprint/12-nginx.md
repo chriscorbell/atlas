@@ -1,7 +1,7 @@
 ---
-title: "Web Server: NGINX"
-phase: "Phase 11"
-weight: 11
+title: "NGINX"
+phase: "Phase 12"
+weight: 12
 ---
 
 NGINX is useful for learning web hosting and serving simple static sites.

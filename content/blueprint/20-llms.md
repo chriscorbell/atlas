@@ -1,7 +1,7 @@
 ---
-title: "Local LLMs: Ollama + OpenWebUI"
-phase: "Phase 19"
-weight: 19
+title: "Local LLMs"
+phase: "Phase 20"
+weight: 20
 ---
 
 This page sets up Ollama for local models and OpenWebUI as a web chat UI.
