@@ -4,90 +4,65 @@ phase: "Phase 2"
 weight: 2
 ---
 
-Choosing your hardware based on what you plan to self-host is the first critical step.
+> **Prerequisite:** [Foundation](/blueprint/01-foundation)
 
-This guide covers quite a bit of ground, but at the same time, it only really scratches the surface - there are a **ton** of self-hostable services out there that you can run, so don't feel like you have to do **everything here** all at once.
+Choosing the appropriate hardware based on what software you plan to self-host is the first critical step in your self-hosting journey.
 
-For example, if you just want to start out with setting up something like:
+This guide covers quite a bit of ground, but at the same time, it also only just scratches the surface - there are a **ton** of self-hostable services out there that you can run, so don't feel like you have to do **everything** listed here all at once.
+
+For example, if you just want to start out with setting up:
 - Navidrome music server to replace Spotify
 - FileBrowser for storing a few gigabytes of files to replace Google Drive
-- Paperless-ngx for backing up important documents
+- Paperless-ngx for backing up important documents with automatic OCR
 
-Then you could technically get away with something as small and cheap as a [Raspberry Pi](https://www.amazon.com/dp/B0CK3L9WD3) with **4GB RAM** and a **128GB microSD card**, though it wouldn't necessarily be my first choice.
+Then you could technically get away with something as small and cheap as a <a href="https://www.amazon.com/dp/B0CK3L9WD3" target="_blank" rel="noopener">Raspberry Pi</a> with **4GB RAM** and a **64GB microSD card**, though it wouldn't necessarily be my first choice.
 
 If you want to do a bit more with your server in addition to the above, like:
 - Streaming your movies and TV libraries with Jellyfin
-- Automate your music/movies/TV management with Sonarr/Radarr/Lidarr
-- Automatically back up photos and videos from your phone using Immich
+- Automating your music/movies/TV library management with Sonarr/Radarr/Lidarr
+- Automatically backing up photos and videos from your phone using Immich
 - Running a Minecraft server for you and your friends using Crafty
 
-Then you would probably want to step up to something like [this mini PC](https://www.amazon.com/dp/B0D5QXTFHH) with a **4-core CPU** and **16GB RAM**, or maybe even [this mini PC](https://www.amazon.com/dp/B0DRFHXRKL) with an **8-core CPU** and **24GB RAM**.
+Then you would probably want to step up to something like <a href="https://www.amazon.com/dp/B0D5QXTFHH" target="_blank" rel="noopener">this mini PC</a> with a **4-core CPU** and **16GB RAM**, or maybe even <a href="https://www.amazon.com/dp/B0DRFHXRKL" target="_blank" rel="noopener">this mini PC</a> with an **8-core CPU** and **24GB RAM**.
 
-If you want to run **everything** detailed in this guide and more, taking advantage of room for multiple hard drives for lots of storage capacity, and even adding a dedicated GPU to run local AI models offline, then you will likely want to build your own server or repurpose an old gaming PC.
+To run **everything** in this guide (and more), along with terabytes of storage capacity, you’ll likely want to repurpose a desktop PC as a server so that you can take advantage of multiple 3.5" SATA hard drives for large storage capacity, along with a dedicated GPU if needed for hardware acceleration for other tasks.
 
-Below is a quick-and-dirty separation of performance tiers based on workload:
-
-**Low CPU/RAM:**
-- NGINX web servers (for building and hosting your own websites)
-- FileBrowser (Google Drive replacement)
-- Paperless-ngx (document backup & organization)
-- Navidrome (Spotify replacement)
-
-**Decent CPU + RAM:**
-- Crafty (running your own Minecraft server)
-- n8n (workflow automation)
-
-**Decent CPU with GPU/iGPU + plenty of storage:**
-- Jellyfin (media streaming - Intel CPU + iGPU with QuickSync **OR** AMD CPU + separate NVIDIA GPU with NVENC recommended)
-- Sonarr/Radarr/Lidarr (media library automation)
-- Immich (Google Photos replacement)
-
-**Fast CPU + Dedicated GPU with high VRAM + fast SSD:**
-- Ollama + OpenWebUI (running local AI models)
+This guide uses the above setup as the default so we can cover the most configuration scenarios, but if you’re using a mini PC or a smaller build, you can skip or adapt the steps that don’t apply. I’ll note those cases throughout.
 
 ### Recommended Baselines
 
+Below is a quick-and-dirty separation of performance tiers based on workload:
+
 ##### A) Starter (experimenting with a few services):
-- CPU: 4–8 cores
-- RAM: 8GB
-- Storage: 500GB – 1TB SSD
+- CPU: 4-8 cores
+- RAM: 8GB (16GB if you can)
+- Storage: 500GB - 1TB SSD
 
 ##### B) Media + Automation:
-- CPU: 6–12 cores (Intel CPU + iGPU with QuickSync **OR** AMD CPU + separate NVIDIA GPU with NVENC)
+- CPU: 6-12 cores + integrated GPU
 - RAM: 16GB (32GB if you can)
-- Storage: 500GB – 1TB NVMe + HDDs for media
+- Storage: 500GB - 1TB NVMe SSD + HDD for media
 
 ##### C) The “Everything” Build:
 
-- CPU: 8–16 cores
-- GPU: NVIDIA RTX w/ high VRAM
+- CPU: 8-16 cores
+- GPU: Integrated **OR** dedicated (NVIDIA RTX w/ high VRAM if you want to run local AI models)
 - RAM: 32GB (64GB if you can)
-- Storage: 1–2 TB NVMe (for VMs + containers + databases) + 2–8 HDDs for ZFS pool
+- Storage: 1 - 2 TB NVMe SSD + 2-8 HDDs for redundancy
 
 ### Storage Strategy
-If you decide to build a server with multiple HDDs for large storage capacity, plan for redundancy:
-- 2 drives → mirror
-- 3–5 drives → RAIDZ1
-- 6+ drives → RAIDZ2
+If building with multiple HDDs, plan your HDD storage pool with redundancy in mind:
+- 2 hard drives → ZFS mirror
+- 3-5 hard drives → RAIDZ1
+- 6+ hard drives → RAIDZ2
 
-**Avoid SMR hard drives**. Use CMR hard drives only.
+*"Pool? ZFS? RAIDZ?"* - Don't worry, we will dive more into this when we get around to setting up TrueNAS later on. Just be aware that a smaller pool of large-capacity drives will be slower and less resilient than a larger pool of smaller-capacity drives, but a 2-drive mirror is still okay.
 
-*"RAIDZ? SMR? CMR? ZFS?"*
+Also, **avoid SMR (Shingled Magnetic Recording) hard drives**. Use CMR (Conventional Magnetic Recording) hard drives instead, and ensure they are 7200RPM (not 5400RPM) 3.5" SATA hard drives, ideally rated for NAS scenarios. I personally recommend Seagate's <a href="https://www.amazon.com/dp/B0B94M13NH" target="_blank" rel="noopener">IronWolf Pro</a> NAS drives.
 
-Don't worry - we will get into this later when we get to [TrueNAS](/blueprint/04-truenas).
-
-### Single Machine vs Separate Storage & Compute
-For this guide, we will only be considering the scenario of a single machine. We assume a desktop or old gaming PC so you can use:
-- Multiple internal hard drives
-- An NVMe SSD
-- Optionally a GPU
-
-**BUT** you could technically build two separate machines if you wanted:
-- Machine A: Bare-metal TrueNAS SCALE with multiple HDDs
-- Machine B: Mini PC running Proxmox + Debian for compute
-
-Pros: easier upgrades, redundancy and separation<br>
-Cons: more hardware and power, more complex to set up
+CMR uses separate tracks for faster, reliable writes (ideal for your NAS), while SMR overlaps tracks like shingles to increase capacity but has a **massive** negative impact on speed and latency.
 
 ### Rackmount
-If you want hot-swap hard drive bays and actual enterprise server components, used rackmount servers can be found on eBay for attractive prices, but **expect more noise and higher power consumption.**
+If you want to go crazy and build something with hot-swap hard drive bays and actual enterprise-grade server components with all the blinky lights, used rackmount servers can be found on eBay for attractive prices, but **expect more noise and higher power consumption.**
+
+> **BEWARE:** Owning a rack comes with risks - if you have empty space in your rack, **you will find yourself browsing eBay at 3:00am looking for stuff to put in it.**
