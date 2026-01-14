@@ -76,6 +76,119 @@
                 pre.addEventListener('scroll', syncButtonPosition, { passive: true });
             });
 
+            const sidebarToggle = document.querySelector('[data-blueprint-toggle]');
+            const sidebar = document.querySelector('[data-blueprint-sidebar]');
+            if (sidebar && sidebarToggle) {
+                const overlay = document.querySelector('[data-blueprint-overlay]');
+                const desktopQuery = window.matchMedia('(min-width: 768px)');
+                let isOpen = false;
+                let previousFocus = null;
+
+                const applyState = function () {
+                    const isDesktop = desktopQuery.matches;
+                    if (isDesktop) {
+                        isOpen = false;
+                        sidebar.removeAttribute('aria-hidden');
+                        sidebarToggle.setAttribute('aria-expanded', 'false');
+                        if (overlay) {
+                            overlay.hidden = true;
+                        }
+                        document.body.classList.remove('is-blueprint-sidebar-open');
+                        document.removeEventListener('keydown', handleKeydown);
+                        previousFocus = null;
+                        return;
+                    }
+
+                    sidebar.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+                    sidebarToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+
+                    if (overlay) {
+                        overlay.hidden = !isOpen;
+                    }
+
+                    if (isOpen) {
+                        document.body.classList.add('is-blueprint-sidebar-open');
+                        document.addEventListener('keydown', handleKeydown);
+                    } else {
+                        document.body.classList.remove('is-blueprint-sidebar-open');
+                        document.removeEventListener('keydown', handleKeydown);
+                    }
+                };
+
+                const focusFirstInteractive = function () {
+                    const focusTarget = sidebar.querySelector('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])');
+                    const elementToFocus = focusTarget instanceof HTMLElement ? focusTarget : sidebar;
+                    elementToFocus.focus({ preventScroll: true });
+                };
+
+                const openSidebar = function () {
+                    if (desktopQuery.matches || isOpen) {
+                        return;
+                    }
+                    previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : sidebarToggle;
+                    isOpen = true;
+                    applyState();
+                    window.requestAnimationFrame(function () {
+                        focusFirstInteractive();
+                    });
+                };
+
+                const closeSidebar = function (options) {
+                    const settings = Object.assign({ restoreFocus: true }, options);
+                    if (!isOpen && !desktopQuery.matches) {
+                        applyState();
+                        if (settings.restoreFocus && settings.restoreFocus !== false) {
+                            sidebarToggle.focus({ preventScroll: true });
+                        }
+                        return;
+                    }
+
+                    isOpen = false;
+                    applyState();
+
+                    if (settings.restoreFocus && previousFocus && typeof previousFocus.focus === 'function') {
+                        previousFocus.focus({ preventScroll: true });
+                    } else if (settings.restoreFocus) {
+                        sidebarToggle.focus({ preventScroll: true });
+                    }
+
+                    previousFocus = null;
+                };
+
+                function handleKeydown(event) {
+                    if (event.key === 'Escape') {
+                        event.preventDefault();
+                        closeSidebar();
+                    }
+                }
+
+                sidebarToggle.addEventListener('click', function () {
+                    if (isOpen) {
+                        closeSidebar();
+                    } else {
+                        openSidebar();
+                    }
+                });
+
+                if (overlay) {
+                    overlay.addEventListener('click', function () {
+                        closeSidebar();
+                    });
+                }
+
+                sidebar.querySelectorAll('a[href]').forEach(function (link) {
+                    link.addEventListener('click', function () {
+                        closeSidebar({ restoreFocus: false });
+                    });
+                });
+
+                desktopQuery.addEventListener('change', function () {
+                    applyState();
+                });
+
+                applyState();
+            }
+
             // Trigger lightweight staggered appear animations once DOM is ready.
             const appearElements = Array.from(document.querySelectorAll('[data-appear]'));
             if (appearElements.length) {

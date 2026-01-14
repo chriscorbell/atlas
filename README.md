@@ -22,8 +22,8 @@ Connect GitHub repo to Cloudflare and deploy using Cloudflare Pages.
 
 ## Project Structure
 
-- `content/blueprint/` — Markdown sources for guide docs
-- `layouts/` — Custom templates, render hooks and section layouts
-- `assets/` — CSS and JavaScript
-- `static/` — Static files and images
-- `hugo.toml` — Site config and metadata
+- `content/blueprint/` - Markdown sources for guide docs
+- `layouts/` - Custom templates, render hooks and section layouts
+- `assets/` - CSS and JavaScript
+- `static/` - Static files and images
+- `hugo.toml` - Site config and metadata

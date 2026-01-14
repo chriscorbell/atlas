@@ -1,7 +1,18 @@
 {{ define "main" }}
 <section class="section blueprint-page" id="blueprint-top">
-    <div class="container blueprint-layout">
-        <aside class="blueprint-sidebar" aria-label="Blueprint outline" data-appear data-appear-group="blueprint">
+    <div class="container blueprint-layout" data-blueprint-layout>
+        <button class="blueprint-sidebar-toggle" type="button" data-blueprint-toggle aria-expanded="false"
+            aria-controls="blueprint-sidebar">
+            <span class="blueprint-sidebar-toggle-icon" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+            <span class="blueprint-sidebar-toggle-label">Blueprint</span>
+        </button>
+
+        <aside id="blueprint-sidebar" class="blueprint-sidebar" aria-label="Blueprint outline"
+            data-blueprint-sidebar tabindex="-1">
             <h2>Blueprint</h2>
             <nav class="blueprint-nav" aria-label="Section navigation">
                 <ol>
@@ -16,6 +27,8 @@
                 </ol>
             </nav>
         </aside>
+
+        <div class="blueprint-sidebar-overlay" data-blueprint-overlay hidden></div>
 
         <div class="blueprint-content">
             <section class="blueprint-section" data-appear data-appear-group="blueprint">
