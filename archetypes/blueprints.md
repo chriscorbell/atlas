@@ -1,9 +1,10 @@
 ---
 title: "{{ replace .File.ContentBaseName "-" " " | title }}"
-description: ""
 phase: ""
 weight: 10
 ---
+
+Add description here...
 
 ## Overview
 

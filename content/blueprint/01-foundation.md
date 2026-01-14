@@ -4,7 +4,7 @@ phase: "Phase 1"
 weight: 1
 ---
 
-#### Why Build Your Own Personal Server?
+### Why Build Your Own Personal Server?
 
 > **WARNING:** 
 > Philosophical musings ahead.<br>
@@ -24,7 +24,9 @@ A simple rule applies:
 > If you can’t inspect the software, **it isn’t really yours.**<br>
 > If you can’t run the service yourself, **you don’t truly control it.**
 
-#### What Self‑Hosting Does for You
+---
+
+### What Self‑Hosting Does for You
 
 Self‑hosting flips this relationship on its head.
 
@@ -43,7 +45,9 @@ Users are often forced into a false choice: **either become an IT system adminis
 
 This guide exists to challenge that.
 
-#### The "Why" Before the "How"
+---
+
+### The "Why" Before the "How"
 
 Building a personal server isn’t just about running one app at home. Once you control your own infrastructure, everything connects - each layer builds on the one before it. That’s why this guide starts at the beginning and explains the why, not just the how.
 
@@ -51,7 +55,10 @@ Building a personal server isn’t just about running one app at home. Once you 
 
 Self‑hosting can be a rabbit hole, but it’s one that leads toward ownership and freedom. Once you understand the foundations, you can decide how far down you want to go.
 
-#### Special Thanks
+---
+
+### Special Thanks
+
 - <a href="https://www.youtube.com/channel/UCl2mFZoRqjw_ELax4Yisf6w/videos" target="_blank" rel="noopener">Louis Rossmann</a>
 - <a href="https://www.youtube.com/@JeffGeerling/videos" target="_blank" rel="noopener">Jeff Geerling</a>
 - <a href="https://www.youtube.com/@LearnLinuxTV/videos" target="_blank" rel="noopener">Jay LaCroix</a>
