@@ -59,34 +59,44 @@ Once the process is complete, close Balena Etcher, unmount/eject your USB drive,
 4. Save your changes to the BIOS and reboot the server.
 5. Override the boot media by accessing the boot menu after rebooting the server (usually this is achieved by repeatedly pressing the F11 key when turning on the computer, but again this varies by manufacturer), then choose to boot from the USB drive you flashed earlier.
 6. After booting from the USB drive, choose "**Install Proxmox VE (Graphical)**".
+
+![](/blueprint/03-proxmox/proxmox-installer.png)
+
 7. Accept the EULA.
-8. Choose the target disk to install Proxmox on. You **do not** want to select a hard drive for this. Install Proxmox to an SSD, ideally a fast NVMe drive.
+8. Choose the target disk to install Proxmox on. You **do not** want to select a hard drive for this. Install Proxmox to an SSD, ideally a fast NVMe drive. Click "Options" and choose `ext4` for your filesystem type.
+
+![](/blueprint/03-proxmox/disk-select.png)
+
    - **Optional:** If you instead want to use two NVMe drives instead of just one (for redundancy in case one of them fails):
-     - Choose the first NVMe drive in the dropdown list.
-     - Click "Options".
-     - Change the filesystem to "ZFS (RAID1)".
+     - After clicking "Options", change the filesystem to "ZFS (RAID1)".
      - Change "Harddisk 0" to the first NVMe drive.
      - Change "Harddisk 1" to the second NVMe drive.
-     - Ensure all other "Harddisk X" choices are set to "-- do not use --".
+     - Ensure all other "Harddisk X" choices are set to `-- do not use --`.
      - Click "OK".
+
 9. Select your country, time zone and keyboard layout, then click "Next".
-10. Create an administrator password (don't forget it!) and enter your email address, then click "Next".
-11. On the Network Configuration page:
+10. Create an administrator password **(don't forget it!)** and enter your email address, then click "Next".
+11. On the Network Configuration page:<br><br> ![](/blueprint/03-proxmox/network-config.png)<br>
     - If your server was able to automatically make a successful connection to your home network via the attached ethernet cable, "Management Interface" should already be chosen for you with a green dot next to the selected interface, leave this alone.
     - "Hostname" will default to something like "pve.home.lan" or "pve.lan", etc. If you want to customize the name of your server, change the "pve" part to something else, or instead just leave it as "pve".
     - "IP Address" should be autopopulated with whatever local IP address your router/DHCP assigned to your server. I recommend changing the last octet to something you'll remember easily (for example: instead of `10.0.0.246`, use `10.0.0.20`).
       - Ensure the IP address you are changing this to is not already in use by another device on your network. You can do this on any computer by opening a terminal and typing `ping 10.0.0.20` and then hit Enter. If you don't see any responses to your pings, that IP address is likely available for use.
     - Click "Next".
+
 12. Review the details on the summary page, and when ready, click "Install".
 13. After the installation is complete, the server will reboot. Remove the USB drive once it reboots so that you don't accidentally boot back into the Proxmox installer.
-14. Once the server has completed rebooting, it should boot automatically into the new Proxmox installation you just created. On the screen, you will only just see white text on a black screen telling you to connect to the server's IP address on port 8006 (example: `https://10.0.0.20:8006`)
-16. Congrats! The foundation of your server is now up and running. You can disconnect everything from the server except for power and ethernet, since from this point forward you will manage everything using your personal computer instead.
+14. Once the server has completed rebooting, it should boot automatically into the new Proxmox installation you just created. On the screen, you will only just see white text on a black screen telling you to use a web browser access the server by connecting to the server's IP address on port 8006 (example: `https://10.0.0.20:8006`)
+16. Congrats! The foundation of your server is now up and running. You can disconnect everything from the server except for the power cable and the ethernet cable, since from this point forward you will manage everything using your personal computer instead.
 
 ---
 
 ### Step 3: Proxmox Configuration
 
 1. On your personal computer, open a web browser and navigate to port 8006 on your server's IP address (example: `https://10.0.0.20:8006`)
-   - You will likely get a warning from your browser stating that the website is not secure. This is because the server's web interface is served over HTTPS, but only has a self-signed certificate for this connection. This is expected and is nothing to worry about. Simply proceed by clicking "Advanced", etc. (depending on what browser you are using).
-2. Log into the web interface by entering the username "root", along with the password you set during the installation process.
-3. The first thing you will see is a warning message stating that you do not have a valid subscription for your server. This is expected since we are using Proxmox for personal use and not in an enterprise environment. Simply ignore this message and click OK.
+   - You will likely get a warning from your browser stating that the website is not secure. This is because the server's web interface is served over HTTPS, but only has a self-signed certificate for this connection. This is expected and is nothing to worry about. Simply proceed by clicking "Advanced" and "Proceed to website" (this process varies depending on what browser you are using).<br><br> ![](/blueprint/03-proxmox/self-signed-certificate-warning.png)<br>
+2. Log into the web interface by entering the username "root", along with the password you set during the installation process.<br><br> ![](/blueprint/03-proxmox/gui-login-window.png)<br>
+3. The first thing you will see is a warning message stating that you do not have a valid subscription for your server. This is expected since we are using Proxmox for personal use and don't have an enterprise subscription. Simply ignore this message and click OK for now, we will disable this message later. <br><br> ![](/blueprint/03-proxmox/proxmox-subscription-warning.png)<br>
+4. You are now logged into the Proxmox VE web UI for your server. <br><br> ![](/blueprint/03-proxmox/pve-ui.png)<br>
+5. The first thing we will do here is set up our package repositories correctly so that we can successfully update Proxmox. It's a good idea to update Proxmox periodically, every week or two is usually often enough.
+   - In the sidebar on the left, you will see the top level is named "Datacenter". The datacenter can contain multiple Proxmox servers grouped together, this makes a "cluster", where each server is a "node" (this is outside of the scope of this guide, in which we will only have a single Proxmox server).
+   - Under "Datacenter", you should see a single node listed with the hostname you chose during the installation process (in the example below, it is "forge")
