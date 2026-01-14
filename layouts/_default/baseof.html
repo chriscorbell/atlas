@@ -36,6 +36,8 @@
         {{ block "main" . }}{{ end }}
     </main>
 
+    {{ $lightbox := resources.Get "lightbox.js" | resources.Minify }}
+    <script src="{{ $lightbox.Permalink }}" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('pre').forEach(function (pre) {

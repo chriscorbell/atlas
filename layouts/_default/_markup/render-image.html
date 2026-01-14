@@ -1,0 +1,35 @@
+{{- $src := .Destination | safeURL -}}
+{{- $alt := .Text | plainify -}}
+{{- $figureScratch := newScratch -}}
+{{- $figureScratch.Set "figureClass" (slice "lightbox-figure") -}}
+{{- $figureScratch.Set "imgAttrs" (slice) -}}
+{{- $figureScratch.Set "group" "" -}}
+{{- $figureScratch.Set "hasLoading" false -}}
+{{- $figureScratch.Set "hasDecoding" false -}}
+{{- range $name, $value := .Attributes }}
+    {{- $lower := lower $name -}}
+    {{- if eq $lower "class" -}}
+        {{- $figureScratch.Add "figureClass" (slice $value) -}}
+    {{- else if eq $lower "data-lightbox-group" -}}
+        {{- $figureScratch.Set "group" $value -}}
+    {{- else if eq $lower "loading" -}}
+        {{- $figureScratch.Set "hasLoading" true -}}
+        {{- $figureScratch.Add "imgAttrs" (slice (printf " %s=\"%s\"" $name ($value | htmlEscape))) -}}
+    {{- else if eq $lower "decoding" -}}
+        {{- $figureScratch.Set "hasDecoding" true -}}
+        {{- $figureScratch.Add "imgAttrs" (slice (printf " %s=\"%s\"" $name ($value | htmlEscape))) -}}
+    {{- else -}}
+        {{- $figureScratch.Add "imgAttrs" (slice (printf " %s=\"%s\"" $name ($value | htmlEscape))) -}}
+    {{- end -}}
+{{- end -}}
+{{- $figureClasses := delimit ($figureScratch.Get "figureClass") " " -}}
+{{- $imgAttrStr := delimit ($figureScratch.Get "imgAttrs") "" -}}
+{{- $group := default (printf "page-%s" (.Page.RelPermalink | urlize)) ($figureScratch.Get "group") -}}
+<figure class="{{ $figureClasses }}" data-lightbox-figure>
+    <a class="lightbox-trigger" href="{{ $src }}" data-lightbox="image" data-lightbox-group="{{ $group }}">
+        <img src="{{ $src }}" alt="{{ $alt | htmlEscape }}"{{ if not ($figureScratch.Get "hasLoading") }} loading="lazy"{{ end }}{{ if not ($figureScratch.Get "hasDecoding") }} decoding="async"{{ end }}{{ with .Title }} title="{{ . | htmlEscape }}"{{ end }}{{ $imgAttrStr }} />
+    </a>
+    {{- with .Title }}
+    <figcaption>{{ . }}</figcaption>
+    {{- end }}
+</figure>
