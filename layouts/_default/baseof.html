@@ -66,6 +66,14 @@
                 });
 
                 pre.appendChild(button);
+
+                const syncButtonPosition = function () {
+                    const offset = pre.scrollLeft;
+                    button.style.transform = 'translateX(' + offset + 'px)';
+                };
+
+                syncButtonPosition();
+                pre.addEventListener('scroll', syncButtonPosition, { passive: true });
             });
 
             // Trigger lightweight staggered appear animations once DOM is ready.
