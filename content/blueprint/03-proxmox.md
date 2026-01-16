@@ -188,9 +188,9 @@ Follow these steps to complete the PVE Post-Install script:
 12. On the next page that shows a message about rebooting after completion, just hit `Enter` to proceed.
 13. On the next page that asks you to reboot Proxmox now, use the arrow keys to select **Yes** and then hit `Enter` to proceed.
 
-##### Set Up IOMMU
+##### Set Up IOMMU & VFIO
 
-Once the server has rebooted, refresh the webpage to ensure you are connected again. The next thing we will do is enable **IOMMU**.
+Once the server has rebooted, refresh the webpage to ensure you are connected again. The next thing we will do is enable **IOMMU** and **VFIO** to allow us to pass through PCIe devices to our virtual machines.
 
 - Select your server under "Datacenter" in the far left sidebar.
 
@@ -201,14 +201,29 @@ Once the server has rebooted, refresh the webpage to ensure you are connected ag
 - In this file, find the line that shows `GRUB_CMDLINE_LINUX_DEFAULT="quiet"`
 
 - If you have an Intel CPU, change this line to:
-  - `GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"`
+  - `GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on iommu=pt"`
 
 - If you have an AMD CPU, change this line to:
-  - `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"`
+  - `GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on iommu=pt"`
 
 - Press `Ctrl` + `X` to exit, `Y` to save changes, then `Enter` to confirm and exit back to the shell.
 
 - Enter the command `update-grub` and wait for the configuration changes to be applied to the **grub** bootloader.
+
+- Enter the command `nano /etc/modules` into the shell window to open the kernel modules list in the **nano** text editor.
+
+- Go to the last line of this file and add these additional lines:
+
+```
+vfio
+vfio_iommu_type1
+vfio_pci
+vfio_virqfd
+```
+
+- Press `Ctrl` + `X` to exit, `Y` to save changes, then `Enter` to confirm and exit back to the shell.
+
+- Enter the command `update-initramfs -u -k all` to update the kernel configuration.
 
 Once complete, click the "Reboot" button in the controls in the top right corner to reboot your server again for these changes to take effect.
 
