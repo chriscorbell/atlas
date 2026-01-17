@@ -155,7 +155,7 @@ tr:hover {
 }
 
 blockquote {
-    /* margin: 1rem 0; */
+    margin: 1rem 0;
     padding: 0.75rem 1.25rem;
     border-left: 4px solid var(--border);
     background-color: var(--background-muted);
@@ -169,11 +169,11 @@ blockquote {
 }
 
 blockquote>blockquote {
-    /* margin: 0.75rem 0; */
+    margin: 0.75rem 0;
 }
 
 blockquote p {
-    /* margin: 0.5rem 0; */
+    margin: 0.5rem 0;
 }
 
 blockquote p:first-child {
