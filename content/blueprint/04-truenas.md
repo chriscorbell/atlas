@@ -14,9 +14,9 @@ Now that we have Proxmox installed and configured properly, it's time to set up 
 
 ## Prepare for Installation
 
-##### Set Up VFIO for HBA/SATA Controller
+### Set Up VFIO for HBA/SATA Controller
 
-> **NOTE:** When virtualizing TrueNAS, you will want to pass through an entire **HBA or SATA controller** to the virtual machine, **not individual disks.**
+> **NOTE:** When virtualizing TrueNAS, you will want to pass through an entire **HBA or SATA controller** to the virtual machine, **not the individual disks.**
 
 Next, we need to passthrough the HBA or SATA controller that your HDDs are connected to. To do this, we first need to find the PCI device ID of the controller.
 
@@ -46,7 +46,7 @@ Do this by creating a VFIO config file using **nano** by running the command bel
 nano /etc/modprobe.d/vfio.conf
 ```
 
-Inside this file, add the line below, replacing the vendor/device ID with the one you found for your device:
+Inside this file, add the line below, replacing the vendor/device ID `1000:0097` with the one you found for your device:
 
 ```
 options vfio-pci ids=1000:0097
@@ -68,9 +68,9 @@ lspci -nnk -s 4c:00.0
 
 Look for `Kernel driver in use: vfio-pci` or no "in-use driver" line.
 
-In my case, my controller still showed `Kernel driver in use: mpt3sas`, meaning that the `mpt3sas` driver is loading before the `vfio-pci` driver loads, so let's go over how to fix this in case you run into something similar.
+In my case, my controller still showed `Kernel driver in use: mpt3sas`, meaning that the system is loading the `mpt3sas` driver before the `vfio-pci` driver, so the controller is attaching itself to the `mpt3sas` driver and not the `vfio-pci` driver like we want. Let's go over how to fix this in case you run into something similar.
 
-To make the `vfio-pci` driver load before the `mpt3sas` driver, we will create a soft dependency by running the command below to create a configuration file with nano:
+To make the system load the `vfio-pci` driver **before** the `mpt3sas` driver, we will create a soft dependency by running the command below to create a configuration file with nano:
 
 ```bash
 nano /etc/modprobe.d/softdep.conf
@@ -88,7 +88,7 @@ Press `Ctrl` + `X` to exit, `Y` to save changes, `Enter` to confirm and exit nan
 update-initramfs -u -k all
 ```
 
-Then reboot Proxmox again. After the reboot is complete, check again by running the command below, replacing the ID with the PCI ID of your controller:
+Then reboot Proxmox again. After the reboot is complete, check again by running the command below, replacing the ID `4c:00.0` with the PCI ID of your controller:
 
 ```bash
 lspci -nnk -s 4c:00.0
@@ -96,13 +96,13 @@ lspci -nnk -s 4c:00.0
 
 You should now see `Kernel driver in use: vfio-pci` which means our controller is now able to be passed through to a VM, so let's proceed.
 
-##### Download TrueNAS ISO Installer
+### Download TrueNAS ISO Installer
 
 Navigate [here](https://www.truenas.com/download-truenas-community-edition/) to access the TrueNAS Community Edition download page. Click the "No thank you, I have already signed up" link in the bottom-right corner, then choose the **Current Stable Version** of TrueNAS by clicking "Download STABLE".
 
 ![](/blueprint/04-truenas/download.png)
 
-##### Upload the ISO to Proxmox
+### Upload the ISO to Proxmox
 
 Back in your Proxmox web UI, under **Datacenter** > **(your server node)** > **local**, click on "ISO Images" in the menu to the right.
 
@@ -167,7 +167,7 @@ On the **Network** page:
 
 Click "Finish".
 
-##### Passthrough HBA/SATA Controller
+### Passthrough HBA/SATA Controller
 
 Under "Datacenter" > (your server node), select your TrueNAS VM and then click on the "Hardware" menu item.
 
@@ -233,11 +233,13 @@ In a web browser, navigate to the IP address shown in the VM's console window to
 
 ## TrueNAS Configuration
 
+> **NOTE:** If you prefer a video guide for configuring TrueNAS, **<a href="https://www.youtube.com/@HardwareHaven/videos" target="_blank" rel="noopener">Hardware Haven</a>** has a great "getting started" video below. <br><br>Everything after 26:35 does not apply since we will be using a separate VM for running our apps.<br><br> {{< youtube 67KtKoW4IM0 >}}<br> If you instead prefer more detailed written instructions, continue reading below.
+
 After navigating to TrueNAS's web UI, you will be greeted with a page instructing you to set a password for the `truenas_admin` user account, so go ahead and set this password (**don't forget it!**) and then click "Sign In".
 
 ![](/blueprint/04-truenas/truenas-login.png)
 
-##### General Settings
+### General Settings
 
 In the sidebar on the left, navigate to **System** > **General Settings**.
 
@@ -248,7 +250,7 @@ In the **Localization** widget on this page, click the **Settings** button and c
 - Date format
 - Time format
 
-##### Network Settings
+### Network Settings
 
 In the sidebar, navigate to **System** > **Network**.
 
@@ -270,29 +272,35 @@ After confirming, you will see a message stating there are unapplied network int
 
 In your address bar of your browser, navigate to the new IP address that you changed to, log back in, and you'll see a pop-up window asking you to save your changes by clicking the **Go To Network Settings** button. Click this, then click the **Save Changes** button to complete the static IP setup.
 
-##### Adding a User
+### Adding a User
 
 You already have the `truenas_admin` user account set up for accessing TrueNAS's web UI, but we need to create a separate user that we will use to access our storage from other machines.
 
 In the sidebar, navigate to **Credentials** > **Users**. Click the **Add** button in the top-right corner, set a username and a password, then click the **Save** button.
 
-##### Create a Storage Pool
+### Create a Storage Pool
 
 In the sidebar, navigate to **Storage**, then click on **Create Pool**.
 
 Give your pool a name. This can be any combination of alphanumeric characters, hyphens and/or underscores, but no spaces. Sticking to lowercase is best practice. Once entered, click **Next**.
 
 Next, we have to choose a layout for our storage array. ZFS layouts themselves are a **deep** rabbit hole that you can dive into on your own if you want, but for the sake of simplicity, here is a rule of thumb based on how many HDDs you have:
+
 - 2 HDDs → **Mirror** (2-wide, 1 VDEV)
   - 50% usable capacity, 1 disk can fail without losing data
+
 - 3 HDDs → **RAIDZ1** (3-wide, 1 VDEV)
   - 66% usable capacity, 1 disk can fail without losing data
+
 - 4 HDDs → **Mirror** (2-wide, 2 VDEVs)
   - 50% usable capacity, 1 disk **in each mirror** can fail without losing data
+
 - 5 HDDs → **RAIDZ2** (5-wide, 1 VDEV)
   - 60% usable capacity, any 2 disks can fail without losing data
+
 - 6 HDDs → **RAIDZ2** (6-wide, 1 VDEV)
   - 66% usable capacity, any 2 disks can fail without losing data
+
 - Alternative for 6 HDDs → **Mirror** (2-wide, 3 VDEVs)
   - 50% usable capacity, 1 disk **in each mirror** can fail
   - Better performance than RAIDZ2 but sacrifices usable capacity
@@ -303,7 +311,7 @@ Once you have chosen the layout for your pool, click **Save and Go to Review**, 
 
 You will get a warning message stating that **all added disks will be erased** in the process of creating the pool. If you approve, check the **Confirm** box, then click **Continue**.
 
-##### Create a Dataset and Share
+### Create a Dataset and Share
 
 Now that we have a pool set up, we need to create a dataset on it.
 
@@ -313,9 +321,9 @@ If a pool is a filing cabinet (the overall "container" of raw storage that is ma
 
 You can choose to have multiple datasets, where each dataset can be used for different purposes and storing/sharing different types of files, but you must have at least one.
 
-For the simplicity of this guide, we will just create a single dataset. Datasets themselves do not use or reserve any space in the pool, only the files within them do, so you can easily add more datasets later if you feel the need to, and move files from one dataset to another if desired.
+For the simplicity of this guide, we will just create a single dataset. Datasets themselves do not use or reserve any space in the pool, only the files within them do, so you can easily add more datasets later if you feel the need to, and later move files from one dataset to another if desired.
 
-To create a datasetm, in the sidebar, click on **Datasets**, select your pool, then click the **Add Dataset** button in the top-right corner.
+To create a dataset, in the sidebar, click on **Datasets**, select your pool, then click the **Add Dataset** button in the top-right corner.
 
 Give your dataset a name. This can be any combination of alphanumeric characters, hyphens and/or underscores, but no spaces. Sticking to lowercase is best practice.
 
@@ -323,15 +331,27 @@ Under **Dataset Preset**, I recommend choosing "Multiprotocol" - this will share
 
 Once selected, click **Save**. You will be prompted to enable and start the NFS and SMB services, go ahead and click **Start** on both prompts.
 
-##### Set Permissions
+### Set Permissions
 
 Now that we have a dataset created on our pool, we need the non-admin user we created earlier to have access to it.
 
 On the **Datasets** page, click on your dataset underneat your pool to select the dataset, then in the **Permissions** widget, click the **Edit** button.
 
-In the **User** dropdown menu, select the user you created earlier, then check the **Apply User** checkbox, and ensure all three Read/Write/Execute checkboxes on the "User" row are checked, then click **Save**.
+In the **User** dropdown menu, select the user you created earlier, then check the **Apply User** checkbox. In the **Group** checkbox, select the group name matching the user you created earlier, then check the **Apply Group** checkbox.
 
-##### Test it Out
+Next, ensure all Read/Write/Execute checkboxes on the right are checked, then click **Save**.
+
+That takes care of the permissions for the dataset itself and its SMB share, but we also need to set the permissions for the dataset's NFS share, since NFS handles permissions differently from SMB.
+
+On the sidebar, navigate to **Shares**, and in the **NFS Shares** widget, click the `⋮` button next to your dataset's NFS share, then click **Edit**.
+
+In the window that appears, click **Advanced Options**. In the **Mapall User** dropdown menu, select the user you created earlier, then under **Mapall Group**, select the group matching the user you created earlier. 
+
+You can optionally enter specific IP addresses of client machines under **Hosts** to restrict access to only those IPs if desired.
+
+Click **Save** to apply the changes.
+
+### Test it Out
 
 Let's test out connecting to your storage share from your computer.
 
@@ -341,49 +361,34 @@ If you're using Windows:
 If you're using macOS:
 - Open Finder and press `Cmd` + `K` to open the "Connect to Server" window. Enter `smb://<your-truenas-ip>` in the "Server Address" field, replacing `<your-truenas-ip>` with the static IP address you set for TrueNAS earlier. Click "Connect", enter the username and password of the user you created earlier when prompted, and you should now have access to your storage from your Mac!
 
-## 4) Create a ZFS pool
-TrueNAS UI:
-1. Storage → Pools → Add
-2. Select disks
-3. Choose layout (Mirror/RAIDZ1/RAIDZ2)
-4. Name: `tank`
+### Scrubbing
 
-## 5) Create datasets (recommended)
-Suggested datasets:
-- `tank/media` (movies/tv/music)
-- `tank/photos` (Immich library)
-- `tank/documents` (Paperless)
-- `tank/appdata` (container configs; optional)
-- `tank/backups` (HA + Proxmox backups)
+With ZFS, it's important to periodically run a scrub task to ensure data integrity and detect any potential issues with the disks in your pool.
 
-## 6) Configure snapshots
-Data Protection → Periodic Snapshot Tasks
-- Hourly: keep 24
-- Daily: keep 30
-- Weekly: keep 8
+By default, TrueNAS automatically sets up a recurring task to scrub your pool after creating it, so there is nothing additional you need to do here, but it's good to be aware of this feature. You can view and manage scrub tasks by navigating to **Storage** to view the **Storage Health** widget.
 
-## 7) SMB share (Windows/macOS clients)
-### Create an SMB user
-Credentials → Local Users → Add
-- user: `smbuser`
-- strong password
+### Snapshots
 
-### Enable SMB service
-System Settings → Services → SMB → Start + Enable
+Snapshots are a powerful feature of ZFS that allow you to take point-in-time copies of your datasets. This is useful for data protection, as you can easily roll back your entire dataset to a previous state, or just navigate into a snapshot to quickly retrieve an accidentally deleted or modified file.
 
-### Create SMB shares
-Sharing → Windows (SMB) Shares → Add
-Example:
-- Path: `/mnt/tank/media`
-- Name: `media`
+In the sidebar, navigate to **Data Protection** > **Periodic Snapshot Tasks**, then click on **Add** to create a new snapshot task.
 
-### Connect from clients
-- Windows: `\<truenas-ip>\media`
-- macOS: `smb://<truenas-ip>/media`
+In the **Dataset** dropdown menu, select your dataset. Configure the schedule and retention settings according to your preferences, then click **Save**.
 
-## Next
-Proceed to: **[Home Assistant OS VM](04-haos-vm.md)**
+Below are some recommended settings:
+- Hourly: 2 days
+- Daily: 2 weeks
+- Weekly: 2 months
 
+### Backing Up Your Configuration
+
+It's a good idea to back up your TrueNAS configuration settings so that you can easily restore them in case of a system failure or if you need to reinstall TrueNAS.
+
+In the sidebar, navigate to **System** > **Advanced Settings**, then in the top-right corner, click **Manage Configuration** > **Download File** > **Save** to download a backup of your current TrueNAS configuration to your computer.
+
+**Keep this file in a separate safe place, NOT on your TrueNAS storage!** If you ever need to restore your configuration on this installation or a new fresh installation, you can do so by clicking **Manage Configuration** > **Upload File** on this same page and selecting the backup file you downloaded.
 
 ---
-**Navigation:** ← [Installing Proxmox VE (Bare Metal)](02-proxmox-install.md) | [Home Assistant OS VM on Proxmox (Backups to NAS)](04-haos-vm.md) →
+
+## Next Steps
+Now that TrueNAS is installed and configured, you can proceed to the next step in the blueprint: Setting up another VM for [Installing Home Assistant OS](/blueprint/05-haos).
