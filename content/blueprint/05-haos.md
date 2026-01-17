@@ -4,7 +4,7 @@ phase: "Phase 5"
 weight: 5
 ---
 
-Home Assistant OS (HAOS) runs well in a Proxmox VM and keeps your smart home isolated from your Docker host.
+Home Assistant OS (HAOS) is a dedicated operating system designed to run Home Assistant. It provides an all-in-one solution that includes the Home Assistant software, add-ons, and the underlying operating system, making it easy to set up and manage your smart home.
 
 ## 1) Create the HAOS VM
 ### Download HAOS image
