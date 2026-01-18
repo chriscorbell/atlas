@@ -345,8 +345,8 @@ body.is-blueprint-sidebar-open {
         top: 0;
         left: 0;
         bottom: 0;
-        width: min(70vw, 220px);
-        max-width: 220px;
+        width: min(65vw, 200px);
+        max-width: 200px;
         padding: clamp(1.5rem, 5vw, 2rem) clamp(1.25rem, 5vw, 1.75rem) clamp(2.5rem, 7vw, 3rem);
         transform: translateX(-110%);
         transition: transform 250ms var(--appear-ease);
@@ -955,7 +955,7 @@ body.is-appear-ready [data-appear].is-visible {
     }
 
     .blueprint-layout {
-        grid-template-columns: minmax(160px, 200px) minmax(0, 1fr);
+        grid-template-columns: minmax(140px, 180px) minmax(0, 1fr);
         align-items: start;
     }
 
@@ -988,7 +988,7 @@ body.is-appear-ready [data-appear].is-visible {
     }
 
     .blueprint-layout {
-        grid-template-columns: minmax(180px, 220px) minmax(0, 1fr);
+        grid-template-columns: minmax(160px, 200px) minmax(0, 1fr);
     }
 }
 
