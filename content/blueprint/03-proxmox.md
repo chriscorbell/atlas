@@ -26,13 +26,13 @@ On a personal computer, connect a USB flash drive with at least 4GB of capacity.
 
 > **NOTE:** Any data currently stored on this USB drive will be **destroyed** during this process. Always ensure you have any important data backed up somewhere safe.
 
-##### Download Proxmox VE ISO Installer
+### Download Proxmox VE ISO Installer
 
 Navigate <a href="https://www.proxmox.com/en/downloads/proxmox-virtual-environment" target="_blank" rel="noopener">here</a> and download the latest version of the Proxmox VE ISO installer:
 
 ![](/blueprint/03-proxmox/proxmoxve-download.png)
 
-##### Flash Your Installer
+### Flash Your Installer
 
 Navigate <a href="https://etcher.balena.io/" target="_blank" rel="noopener">here</a> and download Balena Etcher. This is a tool that runs on Windows, macOS and Linux that you will use to write the Proxmox VE ISO installer file to your USB flash drive.
 
@@ -52,7 +52,7 @@ Once the process is complete, close Balena Etcher, unmount/eject your USB drive,
 
 ## Install Proxmox
 
-##### Before You Begin
+### Before You Begin
 
 Connect the following to your server:
 
@@ -66,7 +66,7 @@ Connect the following to your server:
 
 - The USB flash drive you flashed earlier
 
-##### BIOS Settings
+### BIOS Settings
 
 Power on your server and first go into your BIOS (usually this is achieved by repeatedly pressing the F1, F2 or Delete key when turning on the computer - this varies by manufacturer).
 
@@ -78,7 +78,7 @@ Once you land in the BIOS, look through the menus and ensure either **VT-d** (In
 
 Save your changes to the BIOS and reboot the server.
 
-##### Boot the Installer
+### Boot the Installer
 
 Override the boot media by accessing the boot menu after rebooting the server (usually this is achieved by repeatedly pressing the F11 key when turning on the computer, but again this varies by manufacturer), then choose to boot from the USB drive you flashed earlier.
 
@@ -88,7 +88,7 @@ After booting from the USB drive, choose "**Install Proxmox VE (Graphical)**" to
 
 On the next page, accept the EULA to proceed.
 
-##### Choose Target Disk(s)
+### Choose Target Disk(s)
 
 Choose the target disk to install Proxmox on. You **do not** want to select a HDD for this. Install Proxmox to an SSD, ideally a fast NVMe drive.
 
@@ -103,15 +103,15 @@ After selecting your SSD, click "Options" and choose `ext4` for your filesystem 
 > - Ensure all other "Harddisk X" choices are set to `-- do not use --`
 > - Click "OK" to confirm before proceeding.
 
-##### Locale and Keyboard Layout
+### Locale and Keyboard Layout
 
 Select your country, time zone and keyboard layout, then click "Next" to proceed.
 
-##### Authentication
+### Authentication
 
 Create an administrator password **(don't forget it!)** and enter your email address, then click "Next" to proceed.
 
-##### Network Configuration
+### Network Configuration
 
 ![](/blueprint/03-proxmox/network-config.png)
 
@@ -126,11 +126,11 @@ If your server was able to automatically make a successful connection to your ho
 
 Click "Next" to proceed.
 
-##### Pre-Installation Summary
+### Pre-Installation Summary
 
 Review the details on the summary page, then when ready, click "Install" to proceed.
 
-##### Post-Installation
+### Post-Installation
 
 After the installation is complete, you will see a message on the screen stating the server is about to reboot and that you need to remove the boot media. Go ahead and remove the USB drive at this point so that you don't accidentally boot back into the Proxmox installer once the reboot is complete.
 
@@ -144,7 +144,7 @@ Congrats! Proxmox is now up and running. You can now disconnect everything from 
 
 Now that Proxmox is installed on your server, we need to do some configuration to ensure everything is set up appropriately for our purposes.
 
-##### Accessing Proxmox's Web UI
+### Accessing Proxmox's Web UI
 
 - On your personal computer, open a web browser and navigate to port 8006 on your server's IP address (example: `https://10.0.0.20:8006`)
 
@@ -156,7 +156,7 @@ Now that Proxmox is installed on your server, we need to do some configuration t
 
 - You are now logged into the Proxmox web UI for your server. <br><br> ![](/blueprint/03-proxmox/pve-ui.png)<br>
 
-##### PVE Post-Install Script
+### PVE Post-Install Script
 
 The first thing we will do in the web UI is run the <a href="https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install" target="_blank" rel="noopener">PVE Post-Install</a> script. This script will set up our package repositories correctly so that we can successfully update Proxmox (it's a good idea to update Proxmox periodically, every week or two is usually often enough). It will also disable the "no valid subscription" nag message.
 
@@ -188,7 +188,7 @@ Follow these steps to complete the PVE Post-Install script:
 12. On the next page that shows a message about rebooting after completion, just hit `Enter` to proceed.
 13. On the next page that asks you to reboot Proxmox now, use the arrow keys to select **Yes** and then hit `Enter` to proceed.
 
-##### Set Up IOMMU & VFIO
+### Set Up IOMMU & VFIO
 
 Once the server has rebooted, refresh the webpage to ensure you are connected again. The next thing we will do is enable **IOMMU** and **VFIO** to allow us to pass through PCIe devices to our virtual machines.
 
@@ -229,7 +229,7 @@ Once complete, click the "Reboot" button in the controls in the top right corner
 
 ---
 
-### Next Steps
+## Next Steps
 
 Congrats! Your Proxmox server is now set up and configured!
 

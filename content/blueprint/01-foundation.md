@@ -4,7 +4,7 @@ phase: "Phase 1"
 weight: 1
 ---
 
-### Why Build Your Own Personal Server?
+## Why Build Your Own Personal Server?
 
 > **WARNING:** 
 > Philosophical musings ahead.<br>
@@ -26,7 +26,7 @@ A simple rule applies:
 
 ---
 
-### What Self‑Hosting Does for You
+## What Self‑Hosting Does for You
 
 Self‑hosting flips this relationship on its head.
 
@@ -47,7 +47,7 @@ Self-hosting isn’t “free”, you trade some convenience for responsibility. 
 
 ---
 
-### The "Why" Before the "How"
+## The "Why" Before the "How"
 
 Building a personal server isn’t just about running one app at home. Once you control your own infrastructure, everything connects - each layer builds on the one before it. That’s why this guide starts at the beginning and explains the why, not just the how.
 
@@ -57,7 +57,7 @@ Self‑hosting can be a rabbit hole, but it’s one that leads toward ownership 
 
 ---
 
-### Special Thanks
+## Special Thanks
 
 - <a href="https://www.youtube.com/channel/UCl2mFZoRqjw_ELax4Yisf6w/videos" target="_blank" rel="noopener">Louis Rossmann</a>
 - <a href="https://www.youtube.com/@JeffGeerling/videos" target="_blank" rel="noopener">Jeff Geerling</a>

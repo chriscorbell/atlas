@@ -6,7 +6,7 @@ weight: 2
 
 > **Prerequisite:** [Foundation](/blueprint/01-foundation)
 
-### Consider Your Workload
+## Consider Your Workload
 
 Choosing the appropriate hardware based on what software you plan to self-host is the first critical step in your self-hosting journey.
 
@@ -33,22 +33,24 @@ This guide uses the above setup as the default so we can cover the most configur
 
 ---
 
-### Recommended Baselines
+## Recommended Baselines
 
 Below is a quick-and-dirty separation of performance tiers based on workload:
 
-##### A) Starter (experimenting with a few services):
+### Starter
+Works well for running multiple lightweight services with low concurrent usage (personal file storage, note-taking apps):
 - CPU: 4-8 cores
 - RAM: 8GB (16GB if you can)
 - Storage: 500GB - 1TB SSD
 
-##### B) Media + Automation:
+### Midrange
+Good for running a wider variety of services with moderate concurrent usage (media streaming, automated library management):
 - CPU: 6-12 cores + integrated GPU
 - RAM: 16GB (32GB if you can)
 - Storage: 500GB - 1TB NVMe SSD + one or two HDDs for media/large file storage
 
-##### C) The “Everything” Build:
-
+### Pro
+For running many services with higher concurrent usage, local AI models, and large storage needs:
 - CPU: 8-16 cores
 - GPU: Integrated **OR** dedicated (NVIDIA RTX w/ high VRAM if you want to run local AI models)
 - RAM: 32GB (64GB if you can)
@@ -56,7 +58,7 @@ Below is a quick-and-dirty separation of performance tiers based on workload:
 
 ---
 
-### Bulk Storage Strategy
+## Bulk Storage Strategy
 If building with multiple HDDs, plan your HDD storage pool with redundancy in mind:
 - 2 hard drives → ZFS mirror
 - 3-5 hard drives → RAIDZ1
@@ -70,7 +72,7 @@ CMR uses separate tracks for faster, reliable writes (ideal for your NAS), while
 
 ---
 
-### Rackmount/Enterprise
+## Rackmount/Enterprise
 If you want to go crazy and build something with hot-swap hard drive bays and actual enterprise-grade server components with all the blinky lights, used rackmount/tower servers can be found on eBay for attractive prices, but **expect more noise and higher power consumption.**
 
 > **BEWARE:** Owning a rack comes with risks - if you have empty space in your rack, **you will find yourself browsing eBay at 3:00am looking for stuff to put in it.**

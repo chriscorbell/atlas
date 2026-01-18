@@ -1,6 +1,7 @@
 {{ define "main" }}
 <section class="section blueprint-page" id="blueprint-top">
-    <div class="container blueprint-layout" data-blueprint-layout>
+    {{ $toc := .TableOfContents }}
+    <div class="container blueprint-layout{{ if $toc }} has-toc{{ end }}" data-blueprint-layout>
         <button class="blueprint-sidebar-toggle" type="button" data-blueprint-toggle aria-expanded="false"
             aria-controls="blueprint-sidebar">
             <span class="blueprint-sidebar-toggle-icon" aria-hidden="true">
@@ -19,9 +20,9 @@
                     {{ $sections := where .Site.RegularPages "Section" "blueprint" }}
                     {{ $sections := sort $sections ".Params.weight" }}
                     {{ range $sections }}
-                    <li>
-                        <a href="{{ .RelPermalink }}" {{ if eq $.RelPermalink .RelPermalink }} aria-current="page" {{
-                            end }}>{{ .Title }}</a>
+                    {{ $isCurrent := eq $.RelPermalink .RelPermalink }}
+                    <li class="{{ if $isCurrent }}is-current{{ end }}">
+                        <a href="{{ .RelPermalink }}" {{ if $isCurrent }} aria-current="page" {{ end }}>{{ .Title }}</a>
                     </li>
                     {{ end }}
                 </ol>
@@ -74,6 +75,17 @@
                 </div>
             </section>
         </div>
+
+        {{ with $toc }}
+        <aside class="blueprint-toc" aria-label="On this page">
+            <div class="blueprint-toc-inner">
+                <h2>On This Page:</h2>
+                <div class="blueprint-toc-nav">
+                    {{ . | safeHTML }}
+                </div>
+            </div>
+        </aside>
+        {{ end }}
     </div>
 </section>
 {{ end }}
