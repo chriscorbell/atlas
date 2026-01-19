@@ -188,7 +188,7 @@ Follow these steps to complete the PVE Post-Install script:
 12. On the next page that shows a message about rebooting after completion, just hit `Enter` to proceed.
 13. On the next page that asks you to reboot Proxmox now, use the arrow keys to select **Yes** and then hit `Enter` to proceed.
 
-### Set Up IOMMU & VFIO
+### Enable IOMMU & VFIO
 
 Once the server has rebooted, refresh the webpage to ensure you are connected again. The next thing we will do is enable **IOMMU** and **VFIO** to allow us to pass through PCIe devices to our virtual machines.
 

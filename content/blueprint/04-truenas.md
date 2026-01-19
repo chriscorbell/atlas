@@ -6,7 +6,9 @@ weight: 4
 
 > **Prerequisite:** [Proxmox](/blueprint/03-proxmox)
 
-Now that we have Proxmox installed and configured properly, it's time to set up our TrueNAS VM to run our bulk storage array for our multiple HDDs.
+Now that we have Proxmox installed and configured properly, we can create a VM and install **TrueNAS** on it.
+
+**TrueNAS** (specifically **TrueNAS Community Edition**) is a free and open-source data storage platform (essentially an operating system) built around the **ZFS** file system. It is used for creating a powerful and self-healing **Network Attached Storage** (NAS) for home, business and enterprise use. You can use it to create large storage pools out of multiple connected hard drives, and offers features such as ensuring data integrity, automatic snapshots and more.
 
 > **NOTE:** If you do not have any HDDs connected to your server, or you only have one HDD connected, skip this page and proceed directly to the next page ([HAOS](/blueprint/05-haos)). TrueNAS is designed for creating storage pools from multiple HDDs, so this will not apply to your setup.
 
@@ -18,7 +20,7 @@ Now that we have Proxmox installed and configured properly, it's time to set up 
 
 > **NOTE:** When virtualizing TrueNAS, you will want to pass through an entire **HBA or SATA controller** to the virtual machine, **not the individual disks.**
 
-Next, we need to passthrough the HBA or SATA controller that your HDDs are connected to. To do this, we first need to find the PCI device ID of the controller.
+First, we need to ensure the HBA or SATA controller that your HDDs are connected to will be able to be "passed through" to the VM, meaning the VM will have direct access to it instead of Proxmox having control over it. To do this, we first need to find the PCI device ID of the controller.
 
 Under "Datacenter", click on your server node and then select "Shell" in the menu to the right.
 
@@ -66,17 +68,19 @@ After rebooting, we need to verify that the controller is no longer in use by Pr
 lspci -nnk -s 4c:00.0
 ```
 
-Look for `Kernel driver in use: vfio-pci` or no "in-use driver" line.
+Look for `Kernel driver in use: vfio-pci` or no "in-use driver" line - this means your controller is successfully bound to the vfio-pci driver and is ready for passthrough.
+
+#### Troubleshooting
 
 In my case, my controller still showed `Kernel driver in use: mpt3sas`, meaning that the system is loading the `mpt3sas` driver before the `vfio-pci` driver, so the controller is attaching itself to the `mpt3sas` driver and not the `vfio-pci` driver like we want. Let's go over how to fix this in case you run into something similar.
 
-To make the system load the `vfio-pci` driver **before** the `mpt3sas` driver, we will create a soft dependency by running the command below to create a configuration file with nano:
+One way to resolve this is to make the system load the `vfio-pci` driver **before** the `mpt3sas` driver. To do this, we will create a soft dependency by running the command below to create a configuration file with nano:
 
 ```bash
 nano /etc/modprobe.d/softdep.conf
 ```
 
-Inside this file, add the line below, replacing `mpt3sas` with the driver in question:
+Inside this file, add the line below, replacing `mpt3sas` with the driver in question for your scenario if different:
 
 ```
 softdep mpt3sas pre: vfio-pci
@@ -98,7 +102,7 @@ You should now see `Kernel driver in use: vfio-pci` which means our controller i
 
 ### Download TrueNAS ISO Installer
 
-Navigate [here](https://www.truenas.com/download-truenas-community-edition/) to access the TrueNAS Community Edition download page. Click the "No thank you, I have already signed up" link in the bottom-right corner, then choose the **Current Stable Version** of TrueNAS by clicking "Download STABLE".
+Navigate <a href="https://www.truenas.com/download-truenas-community-edition/" target="_blank" rel="noopener">here</a> to access the TrueNAS Community Edition download page. Click the "No thank you, I have already signed up" link in the bottom-right corner, then choose the **Current Stable Version** of TrueNAS by clicking "Download STABLE".
 
 ![](/blueprint/04-truenas/download.png)
 
@@ -379,6 +383,24 @@ Below are some recommended settings:
 - Hourly: 2 days
 - Daily: 2 weeks
 - Weekly: 2 months
+
+### Email Alerts
+
+To ensure you are notified of any important events or issues with your TrueNAS system, it's a good idea to set up email alerts.
+
+In the sidebar, navigate to **Credentials** > **Users**. Select the `truenas_admin` user, then click the **Edit** button. Under **Additional Details**, enter your email address in the **Email** field, then click **Save**.
+
+Now the admin user has an email address associated with it, but we still need to set up a way for TrueNAS to actually send the emails.
+
+In the sidebar, navigate to **System** > **General Settings**. In the **Email** widget, click the **Settings** button.
+
+There are a few different options here depending on your email provider, but the easiest method is to use **Gmail OAuth** if you have a Gmail account:
+- Set **Send Mail Method** to `Gmail OAuth`
+- Click the **Log into Gmail** button and follow the prompts to authorize TrueNAS to send emails using your Gmail account
+- Once authorized, click the **Send Test Mail** button to verify everything is working properly
+- Once you confirmed you received the test email, click **Save**
+
+If you want to use a different email provider, you can choose **Send Mail Method** to `SMTP` and enter your email provider's SMTP server details. Be sure to check your email provider's documentation for the correct settings to use.
 
 ### Backing Up Your Configuration
 
