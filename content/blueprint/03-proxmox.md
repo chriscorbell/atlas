@@ -236,3 +236,7 @@ Congrats! Your Proxmox server is now set up and configured!
 Next, we will set up a virtual machine on Proxmox that runs the **TrueNAS** operating system, which will host your main storage array for all your files.
 
 > If you don't have multiple HDDs installed in addition to the SSD that we installed Proxmox on, you can skip the TrueNAS installation and proceed directly to setting up your Debian virtual machine for running your applications.
+
+---
+
+> **Last updated:** January 2026<br>

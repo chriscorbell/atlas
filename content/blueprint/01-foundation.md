@@ -65,3 +65,7 @@ Self‑hosting can be a rabbit hole, but it’s one that leads toward ownership 
 - <a href="https://www.youtube.com/@Level1Techs/videos" target="_blank" rel="noopener">Level1Techs</a>
 - <a href="https://www.youtube.com/@HardwareHaven/videos" target="_blank" rel="noopener">Hardware Haven</a>
 - <a href="https://www.youtube.com/@TechnoTim/videos" target="_blank" rel="noopener">Techno Tim</a>
+
+---
+
+> **Last updated:** January 2026<br>

@@ -61,3 +61,7 @@ CMR uses separate tracks for faster, reliable writes (ideal for your NAS), while
 If you want to go crazy and build something with hot-swap hard drive bays and actual enterprise-grade server components, you can find used rackmount/tower servers on eBay for attractive prices, but **expect more noise and higher power consumption.**
 
 > **BEWARE:** Owning a rack comes with risks to your wallet - if you have empty space in your rack, **you will find yourself browsing eBay at 3:00am looking for more hardware to fill it.**
+
+---
+
+> **Last updated:** January 2026<br>

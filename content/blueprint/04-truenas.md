@@ -414,4 +414,8 @@ In the sidebar, navigate to **System** > **Advanced Settings**, then in the top-
 
 ## Next Steps
 
-Now that TrueNAS is installed and configured, you can proceed to the next step in the blueprint: Setting up another VM for [Installing Home Assistant OS](/blueprint/05-haos).
+Now that TrueNAS is installed and configured, you can proceed to the next step in the blueprint.
+
+---
+
+> **Last updated:** January 2026<br>

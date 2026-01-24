@@ -88,3 +88,6 @@ To do this, navigate to **Settings** > **System** > **Storage** in the Home Assi
 
 ## Next Steps
 
+---
+
+> **Last updated:** January 2026<br>
