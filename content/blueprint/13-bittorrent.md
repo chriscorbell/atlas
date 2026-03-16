@@ -4,32 +4,56 @@ phase: "Phase 13"
 weight: 13
 ---
 
-> Use torrents legally and responsibly.
+> **Prerequisite:** [NGINX](/blueprint/12-nginx)
 
-The BitTorrent protocol will be your primary method for acquiring media like movies and TV shows.
+> **Use torrents legally and responsibly.**
 
-To facilitate this, we will construct a stack of two containers to work together: qBittorrent and Gluetun.
+For media automation, the torrent client is one of the core building blocks.
 
-#### qBittorrent?
-It's a simple BitTorrent client that has all the functions you need. It's free, it has no ads, it's open source, and is actively maintained.
+The stack I recommend here is:
 
-And... we can make its interface *prettier* using VueTorrent.
+- **qBittorrent** for the actual BitTorrent client
+- **Gluetun** to force that traffic through your VPN
+- optional **VueTorrent** as a nicer qBittorrent web UI
 
-#### VueTorrent?
-[VueTorrent](https://github.com/VueTorrent/VueTorrent) is a third-party WebUI (think "skin") for qBittorrent made by Rémi Marseault using Vue.js - it just looks and feels much more modern and usable than qBitTorrent's native WebUI, with a fully responsive design on both desktop and mobile.
+The important concept is this:
 
-#### Gluetun?
-Gluetun routes traffic through your VPN provider and can prevent qBittorrent from leaking traffic outside the VPN.
+> If you use BitTorrent, route that traffic through a VPN on purpose. Do not treat that as optional hygiene.
 
-#### VPN?
-Yes, ideally you route ALL BitTorrent traffic through a third-party VPN. 
+---
 
-## 1) Create download directories on NAS
-Suggested:
-- `/mnt/nas/media/downloads`
+## Why qBittorrent + Gluetun?
 
-## 2) Docker Compose
-Create: `~/docker/compose/downloads/torrents.compose.yml`
+Because it solves the right problem cleanly:
+
+- qBittorrent is reliable and widely supported
+- Gluetun provides a VPN container that other containers can share
+- if the VPN is down, the torrent client should not quietly fall back to your normal WAN path
+
+That containment matters.
+
+---
+
+## Prepare Download Paths
+
+Create a place for in-progress and completed downloads.
+
+If you have TrueNAS mounted, I recommend keeping this on the NAS:
+
+```bash
+mkdir -p /mnt/nas/media/downloads
+mkdir -p /mnt/nas/media/downloads/torrents
+mkdir -p ~/docker/appdata/qbittorrent
+mkdir -p ~/docker/compose/downloads
+```
+
+If you skipped TrueNAS, use a local path for now and migrate later.
+
+---
+
+## Create the Compose File
+
+Create `~/docker/compose/downloads/bittorrent.compose.yml`:
 
 ```yaml
 services:
@@ -38,15 +62,16 @@ services:
     container_name: gluetun
     cap_add:
       - NET_ADMIN
-    environment:
-      - VPN_SERVICE_PROVIDER=YOUR_PROVIDER
-      - OPENVPN_USER=YOUR_USER
-      - OPENVPN_PASSWORD=YOUR_PASS
-      - SERVER_COUNTRIES=United States
     ports:
-      - "8082:8080"   # qBittorrent WebUI via Gluetun
+      - "8082:8080"
       - "6881:6881"
       - "6881:6881/udp"
+    environment:
+      - VPN_SERVICE_PROVIDER=YOUR_PROVIDER
+      - OPENVPN_USER=YOUR_USERNAME
+      - OPENVPN_PASSWORD=YOUR_PASSWORD
+      - SERVER_COUNTRIES=United States
+      - TZ=America/New_York
     restart: unless-stopped
 
   qbittorrent:
@@ -61,30 +86,77 @@ services:
       - TZ=America/New_York
       - WEBUI_PORT=8080
     volumes:
-      - ~/docker/appdata/qbittorrent:/config
+      - /home/<your-user>/docker/appdata/qbittorrent:/config
       - /mnt/nas/media/downloads:/downloads
     restart: unless-stopped
-
-  vuetorrent:
-    image: ghcr.io/vuetorrent/vuetorrent:latest
-    container_name: vuetorrent
-    ports:
-      - "3000:3000"
-    restart: unless-stopped
 ```
 
-Start:
-```bash
-docker compose -f ~/docker/compose/downloads/torrents.compose.yml up -d
-```
+Replace the VPN variables with values for your provider.
 
-Open:
-- qBittorrent: `http://<debian-ip>:8082`
-- VueTorrent: `http://<debian-ip>:3000`
-
-## Next
-Proceed to: **[*arr stack](13-arr-stack.md)**
-
+If your provider prefers WireGuard instead of OpenVPN, follow the Gluetun documentation for the appropriate environment variables.
 
 ---
-**Navigation:** ← [Web Server: NGINX (Static Sites)](11-nginx.md) | [The *arr Stack: Sonarr + Radarr (+ Jellyseerr)](13-arr-stack.md) →
+
+## Start the Stack
+
+```bash
+docker compose -f ~/docker/compose/downloads/bittorrent.compose.yml up -d
+```
+
+Open qBittorrent at:
+
+```text
+http://<nixos-ip>:8082
+```
+
+Set a new admin password immediately.
+
+---
+
+## Optional: VueTorrent
+
+If you want a more modern interface, use **VueTorrent** as qBittorrent's custom web UI:
+
+<a href="https://github.com/VueTorrent/VueTorrent" target="_blank" rel="noopener">https://github.com/VueTorrent/VueTorrent</a>
+
+I am not putting it in the baseline compose file because qBittorrent itself is the critical piece, not the skin on top.
+
+Get the client working first. Make it pretty second.
+
+---
+
+## Test the VPN Assumption
+
+Do not just assume the VPN path is working because the container started.
+
+Verify:
+
+- qBittorrent is reachable
+- downloads can start normally
+- the VPN container logs look healthy
+- you understand which container actually owns the network namespace
+
+If you do not understand that last point, stop and fix that before layering automation on top of it.
+
+---
+
+## Security and Exposure
+
+My recommendation:
+
+- keep qBittorrent private
+- access it only from LAN or Tailscale
+
+There is almost never a good reason to expose your torrent client's web UI publicly.
+
+---
+
+## Next Steps
+
+Next, we will add the automation layer on top of this: Sonarr, Radarr and related services for movies and TV.
+
+Proceed to [Movies/TV](/blueprint/14-movies-tv).
+
+---
+
+> **Last updated:** March 2026<br>

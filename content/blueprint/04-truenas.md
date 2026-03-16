@@ -339,9 +339,9 @@ Once selected, click **Save**. You will be prompted to enable and start the NFS 
 
 Now that we have a dataset created on our pool, we need the non-admin user we created earlier to have access to it.
 
-On the **Datasets** page, click on your dataset underneat your pool to select the dataset, then in the **Permissions** widget, click the **Edit** button.
+On the **Datasets** page, click on your dataset underneath your pool to select the dataset, then in the **Permissions** widget, click the **Edit** button.
 
-In the **User** dropdown menu, select the user you created earlier, then check the **Apply User** checkbox. In the **Group** checkbox, select the group name matching the user you created earlier, then check the **Apply Group** checkbox.
+In the **User** dropdown menu, select the user you created earlier, then check the **Apply User** checkbox. In the **Group** dropdown menu, select the group name matching the user you created earlier, then check the **Apply Group** checkbox.
 
 Next, ensure all Read/Write/Execute checkboxes on the right are checked, then click **Save**.
 
